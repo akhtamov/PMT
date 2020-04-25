@@ -93,7 +93,7 @@ bool readFile(string input)
             getline(file, line);
             ptrCur->shp.rct.yRightDownCorner = atoi(line.c_str());
         }
-
+        ptrCur = ptrCur->next;
     }
     return true;
 }

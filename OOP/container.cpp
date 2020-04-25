@@ -51,7 +51,9 @@ int List::In(ifstream& in) {
             ptrCur->shape->ReadShapeFromFile(in);
             break;
         }
+
         }
+        ptrCur = ptrCur->next;
     }
     return 1;
 }

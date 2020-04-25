@@ -25,7 +25,6 @@ public:
 };
 
 
-
 class Circle : public Shape
 {
 private:
@@ -36,3 +35,4 @@ public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
 };
+

@@ -88,3 +88,4 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
         << _yRightDownCorner << ')' << endl;
     Shape::WriteShapeToFile(out);
 }
+
