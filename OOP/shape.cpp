@@ -88,3 +88,37 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
         << _yRightDownCorner << ')' << endl;
     Shape::WriteShapeToFile(out);
 }
+
+void Triangle::ReadShapeFromFile(ifstream& in)
+{
+    Shape::ReadShapeFromFile(in);
+
+    string line;
+
+    getline(in, line);
+    _x1 = atoi(line.c_str());
+
+    getline(in, line);
+    _y1 = atoi(line.c_str());
+
+    getline(in, line);
+    _x2 = atoi(line.c_str());
+
+    getline(in, line);
+    _y2 = atoi(line.c_str());
+
+    getline(in, line);
+    _x3 = atoi(line.c_str());
+
+    getline(in, line);
+    _y3 = atoi(line.c_str());
+}
+
+void Triangle::WriteShapeToFile(ofstream& out)
+{
+    out << "Type of shape is TRIANGLE" << endl;
+    out << "Its coordinates are (" << _x1 << ", " << _y1
+        << "), (" << _x2 << ", " << _y2 << "), ("
+        << _x3 << ", " << _y3 << ")" << endl;
+    Shape::WriteShapeToFile(out);
+}

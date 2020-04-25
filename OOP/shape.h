@@ -36,3 +36,15 @@ public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
 };
+
+
+class Triangle : public Shape
+{
+private:
+    int _x1, _y1;
+    int _x2, _y2;
+    int _x3, _y3;
+public:
+    void ReadShapeFromFile(ifstream& in) override;
+    void WriteShapeToFile(ofstream& out) override;
+};

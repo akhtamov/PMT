@@ -51,7 +51,13 @@ int List::In(ifstream& in) {
             ptrCur->shape->ReadShapeFromFile(in);
             break;
         }
+        case 2: {
+            ptrCur->shape = new Triangle();
+            ptrCur->shape->ReadShapeFromFile(in);
+            break;
         }
+        }
+        ptrCur = ptrCur->next;
     }
     return 1;
 }
