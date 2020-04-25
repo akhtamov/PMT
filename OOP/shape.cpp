@@ -17,10 +17,14 @@ void Shape::ReadShapeFromFile(ifstream& in) {
     case Shape::CYAN: clr = Shape::CYAN; break;
     case Shape::PURPLE: clr = Shape::PURPLE; break;
     }
+    getline(in, line);
+    _destiny = atof(line.c_str());
 }
 
 
 void Shape::WriteShapeToFile(ofstream& out) {
+
+    out << "Destiny is " << _destiny << endl;
     string color;
     switch (clr) {
     case Shape::RED: color = "red"; break;

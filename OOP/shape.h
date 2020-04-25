@@ -6,6 +6,7 @@ class Shape
 {
 private:
     enum _color { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
+    float _destiny;
 public:
     virtual void ReadShapeFromFile(ifstream& in);
     virtual void WriteShapeToFile(ofstream& out);

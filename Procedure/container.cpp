@@ -67,6 +67,9 @@ bool readFile(string input)
         case shape::CYAN: ptrCur->shp.clr = shape::CYAN; break;
         case shape::PURPLE: ptrCur->shp.clr = shape::PURPLE; break;
         }
+        
+        getline(file, line);
+        ptrCur->shp.destiny = atof(line.c_str());
 
         if (ptrCur->shp.tp == shape::CIRCLE)
         {
@@ -120,6 +123,9 @@ bool writeToFile(string output) {
             outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
                 << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
         }
+
+        outfile << "Destiny is " << ptrTemp->shp.destiny << endl;
+
         switch (ptrTemp->shp.clr) {
         case shape::RED: color = "red"; break;
         case shape::ORANGE: color = "orange"; break;
