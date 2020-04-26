@@ -106,12 +106,16 @@ bool writeToFile(string output) {
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
     string color;
+    float perimeter;
+   
     do {
+        perimeter = calculteThePerimeter(ptrTemp);
         if (ptrTemp->shp.tp == shape::CIRCLE) {
             outfile << "Type of shape is CIRCLE" << endl;
             outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
                 << endl;
             outfile << "Radius is " << ptrTemp->shp.cr.radius << endl;
+            outfile << "Perimeter is " << perimeter << endl;
         }
         else if (ptrTemp->shp.tp == shape::RECTANGLE) {
             outfile << "Type of shape is RECTANGLE" << endl;
@@ -119,6 +123,7 @@ bool writeToFile(string output) {
                 << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
             outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
                 << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
+            outfile << "Perimeter is " << perimeter << endl;
         }
         switch (ptrTemp->shp.clr) {
         case shape::RED: color = "red"; break;
@@ -136,4 +141,15 @@ bool writeToFile(string output) {
     } while (ptrTemp != ptrHead);
     outfile << "Number of shapes is " << figuresCount;
     return true;
+}
+
+float calculteThePerimeter(list *ptrTemp)
+{
+    switch (ptrTemp->shp.tp){
+    case shape::RECTANGLE:
+        return 2 * (abs(ptrTemp->shp.rct.xLeftUpCorner - ptrTemp->shp.rct.xRightDownCorner)
+            + abs(ptrTemp->shp.rct.yLeftUpCorner - ptrTemp->shp.rct.yRightDownCorner));
+    case shape::CIRCLE:
+        return 2 * 3.14 * ptrTemp->shp.cr.radius;
+    }
 }

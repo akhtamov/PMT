@@ -1,16 +1,19 @@
 Type of shape is CIRCLE
 Center's coordinates are (1, 2)
 Radius is 3
+Perimeter is 18.84
 Color is cyan
 
 Type of shape is RECTANGLE
 Left angle's coordinates are (1, 2)
 Right angle's coordinates are (3, 4)
+Perimeter is 8
 Color is yellow
 
 Type of shape is RECTANGLE
 Left angle's coordinates are (1, 2)
 Right angle's coordinates are (3, 4)
+Perimeter is 8
 Color is yellow
 
 Number of shapes is 3

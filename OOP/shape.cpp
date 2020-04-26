@@ -37,6 +37,12 @@ void Shape::WriteShapeToFile(ofstream& out) {
 }
 
 
+float Shape::CalculateThePerimeter()
+{
+    return 0;
+}
+
+
 void Circle::ReadShapeFromFile(ifstream& in) {
 
     Shape::ReadShapeFromFile(in);
@@ -53,13 +59,22 @@ void Circle::ReadShapeFromFile(ifstream& in) {
     _radius = atoi(line.c_str());
 }
 
+
 void Circle::WriteShapeToFile(ofstream& out) {
     out << "Type of shape is CIRCLE" << endl;
     out << "Center's coordinates are (" << _xCenter << ", " << _yCenter << ")"
         << endl;
     out << "Radius is " << _radius << endl;
+    out << "Perimeter is " << CalculateThePerimeter() << endl;
     Shape::WriteShapeToFile(out);
 }
+
+
+float Circle::CalculateThePerimeter()
+{
+    return 2 * 3.14 * _radius;
+}
+
 
 void Rectangle::ReadShapeFromFile(ifstream& in) {
 
@@ -86,6 +101,12 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
         << _yLeftUpCorner << ')' << endl;
     out << "Right angle's coordinates are (" << _xRightDownCorner << ", "
         << _yRightDownCorner << ')' << endl;
+    out << "Perimeter is " << CalculateThePerimeter() << endl;
     Shape::WriteShapeToFile(out);
+}
+
+float Rectangle::CalculateThePerimeter()
+{
+    return 2 * ( abs(_xLeftUpCorner - _xRightDownCorner) + abs(_yLeftUpCorner - _yRightDownCorner) );
 }
 
