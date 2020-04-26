@@ -18,13 +18,13 @@ void Shape::ReadShapeFromFile(ifstream& in) {
     case Shape::PURPLE: clr = Shape::PURPLE; break;
     }
     getline(in, line);
-    _destiny = atof(line.c_str());
+    _density = atof(line.c_str());
 }
 
 
 void Shape::WriteShapeToFile(ofstream& out) {
 
-    out << "Destiny is " << _destiny << endl;
+    out << "Destiny is " << _density << endl;
     string color;
     switch (clr) {
     case Shape::RED: color = "red"; break;

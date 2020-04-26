@@ -69,7 +69,7 @@ bool readFile(string input)
         }
         
         getline(file, line);
-        ptrCur->shp.destiny = atof(line.c_str());
+        ptrCur->shp.density = atof(line.c_str());
 
         if (ptrCur->shp.tp == shape::CIRCLE)
         {
@@ -124,7 +124,7 @@ bool writeToFile(string output) {
                 << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
         }
 
-        outfile << "Destiny is " << ptrTemp->shp.destiny << endl;
+        outfile << "Density is " << ptrTemp->shp.density << endl;
 
         switch (ptrTemp->shp.clr) {
         case shape::RED: color = "red"; break;

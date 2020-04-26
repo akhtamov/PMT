@@ -7,7 +7,7 @@ struct shape
 
     enum color { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
 
-    float destiny;
+    float density;
 
     struct circle
     {
