@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
     outputPath = argv[2];
 
     readFile(inputPath);
+    sortList();
     writeToFile(outputPath);
     return 0;
 }

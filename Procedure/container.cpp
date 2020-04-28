@@ -153,3 +153,53 @@ float calculteThePerimeter(list *ptrTemp)
         return 2 * 3.14 * ptrTemp->shp.cr.radius;
     }
 }
+
+int getListLength(list* ptrHead)
+{
+    if (ptrHead == nullptr)
+    {
+        return 0;
+    }
+    list *ptrTemp = ptrHead;    
+    int length = 0;
+
+    do {
+        ptrTemp = ptrTemp->next;
+        length++;
+    } while (ptrTemp != ptrHead);
+
+    return length;
+}
+
+bool compare(list* first, list* second) 
+{ 
+    return calculteThePerimeter(first) < calculteThePerimeter(second);
+}
+
+void sortList()
+{
+    int length = getListLength(ptrHead);
+
+    list* ptrTemp_i;
+    list* ptrTemp_j;
+    for (int i = 0; i < length - 1; i++) {
+
+        ptrTemp_i = ptrHead;
+        for (int copy_i = 0; copy_i != i; copy_i++)
+        {
+            ptrTemp_i = ptrTemp_i->next;
+        }
+        ptrTemp_j = ptrTemp_i->next;
+
+        for (int j = i + 1; j < length; j++){
+            if (compare(ptrTemp_i, ptrTemp_j))
+            {
+                shape tmp = ptrTemp_i->shp;
+                ptrTemp_i->shp = ptrTemp_j->shp;
+                ptrTemp_j->shp = tmp;
+            }
+            ptrTemp_j = ptrTemp_j->next;
+        }   
+    }
+}
+

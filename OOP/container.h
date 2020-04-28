@@ -18,6 +18,10 @@ public:
 
     List* InitList();
     List* AddToList();
+    
+    int GetListLength(List* prtHead);
+    void Sort();
+    
 
     int In(ifstream& in);
     int Out(ofstream& out);

@@ -14,3 +14,6 @@ struct list* add_to_list();
 bool readFile(string input);
 bool writeToFile(string output);
 float calculteThePerimeter(list*);
+int getListLength(list* ptrHead);
+void compare();
+void sortList();
