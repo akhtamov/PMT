@@ -89,3 +89,13 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
     Shape::WriteShapeToFile(out);
 }
 
+void Shape::WriteRectangleToFile(ofstream& out)
+{
+    out << "";
+}
+
+
+void Rectangle::WriteRectangleToFile(ofstream& out)
+{
+    WriteShapeToFile(out);
+}

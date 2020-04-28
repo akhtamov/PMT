@@ -9,6 +9,7 @@ private:
 public:
     virtual void ReadShapeFromFile(ifstream& in);
     virtual void WriteShapeToFile(ofstream& out);
+    virtual void WriteRectangleToFile(ofstream& out);
 };
 
 
@@ -22,6 +23,7 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+    void WriteRectangleToFile(ofstream& out) override;
 };
 
 
@@ -34,5 +36,6 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+
 };
 

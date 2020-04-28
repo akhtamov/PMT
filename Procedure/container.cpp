@@ -97,7 +97,36 @@ bool readFile(string input)
     }
     return true;
 }
+bool out(list* ptrTemp, ofstream& outfile)
+{
+    string color;
+    if (ptrTemp->shp.tp == shape::CIRCLE) {
+        outfile << "Type of shape is CIRCLE" << endl;
+        outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
+            << endl;
+        outfile << "Radius is " << ptrTemp->shp.cr.radius << endl;
+    }
+    else if (ptrTemp->shp.tp == shape::RECTANGLE) {
+        outfile << "Type of shape is RECTANGLE" << endl;
+        outfile << "Left angle's coordinates are (" << ptrTemp->shp.rct.xLeftUpCorner << ", "
+            << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
+        outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
+            << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
+    }
+    switch (ptrTemp->shp.clr) {
+    case shape::RED: color = "red"; break;
+    case shape::ORANGE: color = "orange"; break;
+    case shape::YELLOW: color = "yellow"; break;
+    case shape::GREEN: color = "green"; break;
+    case shape::BLUE: color = "blue"; break;
+    case shape::CYAN: color = "cyan"; break;
+    case shape::PURPLE: color = "purple"; break;
+    default: color = "unknown color";
+    }
+    outfile << "Color is " << color << endl << endl;
 
+    return true;
+}
 bool writeToFile(string output) {
     ofstream outfile(output);
     if (!outfile.is_open()) {
@@ -105,35 +134,31 @@ bool writeToFile(string output) {
     }
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
-    string color;
     do {
-        if (ptrTemp->shp.tp == shape::CIRCLE) {
-            outfile << "Type of shape is CIRCLE" << endl;
-            outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
-                << endl;
-            outfile << "Radius is " << ptrTemp->shp.cr.radius << endl;
-        }
-        else if (ptrTemp->shp.tp == shape::RECTANGLE) {
-            outfile << "Type of shape is RECTANGLE" << endl;
-            outfile << "Left angle's coordinates are (" << ptrTemp->shp.rct.xLeftUpCorner << ", "
-                << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
-            outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
-                << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
-        }
-        switch (ptrTemp->shp.clr) {
-        case shape::RED: color = "red"; break;
-        case shape::ORANGE: color = "orange"; break;
-        case shape::YELLOW: color = "yellow"; break;
-        case shape::GREEN: color = "green"; break;
-        case shape::BLUE: color = "blue"; break;
-        case shape::CYAN: color = "cyan"; break;
-        case shape::PURPLE: color = "purple"; break;
-        default: color = "unknown color";
-        }
-        outfile << "Color is " << color << endl << endl;
+        out(ptrTemp, outfile);
         ptrTemp = ptrTemp->next;
         figuresCount++;
     } while (ptrTemp != ptrHead);
     outfile << "Number of shapes is " << figuresCount;
     return true;
+}
+
+bool writeRectanglesToFile(string output)
+{
+    ofstream outfile(output);
+    if (!outfile.is_open()) {
+        return false;
+    }
+    int figuresCount = 0;
+    list* ptrTemp = ptrHead;
+    outfile << "Only RECTANGLES: " << endl;
+    do {
+        if (ptrTemp->shp.tp == shape::RECTANGLE)
+            out(ptrTemp, outfile);
+        ptrTemp = ptrTemp->next;
+        figuresCount++;
+    } while (ptrTemp != ptrHead);
+    outfile << "Number of shapes is " << figuresCount;
+    return true;
+
 }

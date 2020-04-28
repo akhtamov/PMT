@@ -16,6 +16,6 @@ int main(int argc, char* argv[])
     outputPath = argv[2];
 
     readFile(inputPath);
-    writeToFile(outputPath);
+    writeRectanglesToFile(outputPath);
     return 0;
 }

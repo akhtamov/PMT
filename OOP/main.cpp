@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     List* lst = new List();
     lst->In(infile);
-    lst->Out(outfile);
+    lst->OutRectangle(outfile);
 
     return 0;
 }

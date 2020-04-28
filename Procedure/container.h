@@ -13,3 +13,5 @@ struct list* list_init();
 struct list* add_to_list();
 bool readFile(string input);
 bool writeToFile(string output);
+bool out(list*, ofstream& outfile);
+bool writeRectanglesToFile(string output);

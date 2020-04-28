@@ -72,3 +72,18 @@ int List::Out(ofstream& out) {
     return 1;
 }
 
+
+int List::OutRectangle(ofstream& out)
+{
+    int rectangleCount = 0;
+    List* ptrTemp = ptrHead;
+    out << "Only RECTANGLES: " << endl;
+    do {
+        ptrTemp->shape->WriteRectangleToFile(out);
+        ptrTemp = ptrTemp->next;
+        rectangleCount++;
+    } while (ptrTemp != ptrHead);
+
+    out << "Number of shapes is " << rectangleCount;
+    return 1;
+}

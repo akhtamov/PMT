@@ -21,5 +21,6 @@ public:
 
     int In(ifstream& in);
     int Out(ofstream& out);
+    int OutRectangle(ofstream& out);
 };
 
