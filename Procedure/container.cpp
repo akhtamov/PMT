@@ -135,7 +135,6 @@ bool out(list* ptrTemp, ofstream& outfile)
             << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
         outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
             << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
-<<<<<<< HEAD
     }
     else if (ptrTemp->shp.tp == shape::TRIANGLE)
     {
@@ -143,10 +142,8 @@ bool out(list* ptrTemp, ofstream& outfile)
         outfile << "Its coordinates are (" << ptrTemp->shp.tr.x1 << ", " << ptrTemp->shp.tr.y1
             << "), (" << ptrTemp->shp.tr.x2 << ", " << ptrTemp->shp.tr.y2 << "), ("
             << ptrTemp->shp.tr.x3 << ", " << ptrTemp->shp.tr.y3 << ")" << endl;
-=======
-    outfile << "Density is " << ptrTemp->shp.density << endl;
->>>>>>> lab2.2
     }
+    outfile << "Density is " << ptrTemp->shp.density << endl;
     switch (ptrTemp->shp.clr) {
     case shape::RED: color = "red"; break;
     case shape::ORANGE: color = "orange"; break;
