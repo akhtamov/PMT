@@ -68,6 +68,9 @@ bool readFile(string input)
         case shape::CYAN: ptrCur->shp.clr = shape::CYAN; break;
         case shape::PURPLE: ptrCur->shp.clr = shape::PURPLE; break;
         }
+        
+        getline(file, line);
+        ptrCur->shp.density = atof(line.c_str());
 
         if (ptrCur->shp.tp == shape::CIRCLE)
         {
@@ -132,6 +135,7 @@ bool out(list* ptrTemp, ofstream& outfile)
             << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
         outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
             << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
+<<<<<<< HEAD
     }
     else if (ptrTemp->shp.tp == shape::TRIANGLE)
     {
@@ -139,6 +143,9 @@ bool out(list* ptrTemp, ofstream& outfile)
         outfile << "Its coordinates are (" << ptrTemp->shp.tr.x1 << ", " << ptrTemp->shp.tr.y1
             << "), (" << ptrTemp->shp.tr.x2 << ", " << ptrTemp->shp.tr.y2 << "), ("
             << ptrTemp->shp.tr.x3 << ", " << ptrTemp->shp.tr.y3 << ")" << endl;
+=======
+    outfile << "Density is " << ptrTemp->shp.density << endl;
+>>>>>>> lab2.2
     }
     switch (ptrTemp->shp.clr) {
     case shape::RED: color = "red"; break;

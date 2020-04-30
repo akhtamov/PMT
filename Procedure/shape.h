@@ -7,6 +7,8 @@ struct shape
 
     enum color { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
 
+    float density;
+
     struct circle
     {
         int xCenter, yCenter, radius;
