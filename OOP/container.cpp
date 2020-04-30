@@ -73,6 +73,7 @@ int List::Out(ofstream& out) {
 }
 
 
+
 void List::Sort() {
     int length = GetListLength(ptrHead);
     List* ptrTemp_i = ptrHead;
@@ -106,7 +107,7 @@ int List::GetListLength(List* ptrHead) {
         return 0;
     }
     else {
-        List *ptrTemp = ptrHead;
+        List* ptrTemp = ptrHead;
         int length = 0;
         do {
             length++;
@@ -114,4 +115,20 @@ int List::GetListLength(List* ptrHead) {
         } while (ptrTemp != ptrHead);
         return length;
     }
+}
+
+int List::OutRectangle(ofstream& out)
+{
+    int rectangleCount = 0;
+    List* ptrTemp = ptrHead;
+    out << "Only RECTANGLES: " << endl;
+    do {
+        ptrTemp->shape->WriteRectangleToFile(out);
+        ptrTemp = ptrTemp->next;
+        rectangleCount++;
+    } while (ptrTemp != ptrHead);
+
+    out << "Number of shapes is " << rectangleCount;
+    return 1;
+
 }

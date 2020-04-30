@@ -12,6 +12,8 @@ public:
     virtual void WriteShapeToFile(ofstream& out);
     virtual float CalculateThePerimeter();
     bool Compare(Shape *other);
+    virtual void WriteRectangleToFile(ofstream& out);
+
 };
 
 
@@ -26,6 +28,8 @@ public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
     float CalculateThePerimeter() override;
+    void WriteRectangleToFile(ofstream& out) override;
+
 };
 
 

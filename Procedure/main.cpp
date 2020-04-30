@@ -17,5 +17,7 @@ int main(int argc, char* argv[])
     readFile(inputPath);
     sortList();
     writeToFile(outputPath);
+    //writeRectanglesToFile(outputPath);
+
     return 0;
 }

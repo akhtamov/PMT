@@ -17,3 +17,6 @@ float calculteThePerimeter(list*);
 int getListLength(list* ptrHead);
 void compare();
 void sortList();
+bool out(list*, ofstream& outfile);
+bool writeRectanglesToFile(string output);
+

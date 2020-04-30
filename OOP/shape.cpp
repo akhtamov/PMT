@@ -110,6 +110,7 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
     Shape::WriteShapeToFile(out);
 }
 
+
 float Rectangle::CalculateThePerimeter()
 {
     return 2 * ( abs(_xLeftUpCorner - _xRightDownCorner) + abs(_yLeftUpCorner - _yRightDownCorner) );
@@ -119,3 +120,15 @@ bool Shape::Compare(Shape *other)
 {
     return CalculateThePerimeter() < other->CalculateThePerimeter();
 }
+
+void Shape::WriteRectangleToFile(ofstream& out)
+{
+    out << "";
+}
+
+
+void Rectangle::WriteRectangleToFile(ofstream& out)
+{
+    WriteShapeToFile(out);
+}
+

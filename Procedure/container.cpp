@@ -159,6 +159,7 @@ bool out(list* ptrTemp, ofstream& outfile)
     default: color = "unknown color";
     }
     outfile << "Color is " << color << endl << endl;
+
     return true;
 }
 bool writeToFile(string output) {
@@ -168,9 +169,6 @@ bool writeToFile(string output) {
     }
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
-    string color;
-    float perimeter;
-   
     do {
         out(ptrTemp, outfile);
         ptrTemp = ptrTemp->next;
@@ -240,3 +238,22 @@ void sortList()
     }
 }
 
+bool writeRectanglesToFile(string output)
+{
+    ofstream outfile(output);
+    if (!outfile.is_open()) {
+        return false;
+    }
+    int figuresCount = 0;
+    list* ptrTemp = ptrHead;
+    outfile << "Only RECTANGLES: " << endl;
+    do {
+        if (ptrTemp->shp.tp == shape::RECTANGLE)
+            out(ptrTemp, outfile);
+        ptrTemp = ptrTemp->next;
+        figuresCount++;
+    } while (ptrTemp != ptrHead);
+    outfile << "Number of shapes is " << figuresCount;
+    return true;
+
+}

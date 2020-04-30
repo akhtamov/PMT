@@ -29,6 +29,8 @@ int main(int argc, char* argv[]) {
     lst->In(infile);
     lst->Sort();
     lst->Out(outfile);
+    //lst->OutRectangle(outfile);
+
 
     return 0;
 }
