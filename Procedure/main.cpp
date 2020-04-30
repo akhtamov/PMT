@@ -2,7 +2,6 @@
 #include <string>
 #include "container.h"
 using namespace std;
-
 int main(int argc, char* argv[])
 {
     string outputPath;
