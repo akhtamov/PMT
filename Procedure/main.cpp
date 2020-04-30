@@ -2,7 +2,6 @@
 #include <string>
 #include "container.h"
 using namespace std;
-
 int main(int argc, char* argv[])
 {
     string outputPath;
@@ -16,6 +15,7 @@ int main(int argc, char* argv[])
     outputPath = argv[2];
 
     readFile(inputPath);
+    sortList();
     writeToFile(outputPath);
     return 0;
 }

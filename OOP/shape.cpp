@@ -1,5 +1,6 @@
-#include "shape.h"
+#include "container.h"
 #include <string>
+
 
 void Shape::ReadShapeFromFile(ifstream& in) {
     string line;
@@ -114,3 +115,7 @@ float Rectangle::CalculateThePerimeter()
     return 2 * ( abs(_xLeftUpCorner - _xRightDownCorner) + abs(_yLeftUpCorner - _yRightDownCorner) );
 }
 
+bool Shape::Compare(Shape *other)
+{
+    return CalculateThePerimeter() < other->CalculateThePerimeter();
+}

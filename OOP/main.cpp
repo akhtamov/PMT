@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
 
     List* lst = new List();
     lst->In(infile);
+    lst->Sort();
     lst->Out(outfile);
 
     return 0;

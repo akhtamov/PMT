@@ -11,6 +11,7 @@ public:
     virtual void ReadShapeFromFile(ifstream& in);
     virtual void WriteShapeToFile(ofstream& out);
     virtual float CalculateThePerimeter();
+    bool Compare(Shape *other);
 };
 
 

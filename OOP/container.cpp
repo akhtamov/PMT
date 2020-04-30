@@ -72,3 +72,46 @@ int List::Out(ofstream& out) {
     return 1;
 }
 
+
+void List::Sort() {
+    int length = GetListLength(ptrHead);
+    List* ptrTemp_i = ptrHead;
+    List* ptrTemp_j = ptrHead->next;
+    Shape *shape_j = ptrTemp_j->shape;
+    for (int i = 0; i < length - 1; i++)
+    {
+        ptrTemp_i = ptrHead;
+        for (int copy_i = 0; copy_i != i; copy_i++)
+        {
+            ptrTemp_i = ptrTemp_i->next;
+        }
+        ptrTemp_j = ptrTemp_i->next;
+        shape_j = ptrTemp_j->shape;
+        for (int j = i + 1; j < length; j++)
+        {
+            if (ptrTemp_i->shape->Compare(shape_j))
+            {
+                Shape *tmp = ptrTemp_i->shape;
+                ptrTemp_i->shape = shape_j;
+                ptrTemp_j->shape = tmp;
+            }
+            ptrTemp_j = ptrTemp_j->next;
+            shape_j = ptrTemp_j->shape;
+        } 
+    }
+}
+
+int List::GetListLength(List* ptrHead) {
+    if (ptrHead == nullptr) {
+        return 0;
+    }
+    else {
+        List *ptrTemp = ptrHead;
+        int length = 0;
+        do {
+            length++;
+            ptrTemp = ptrTemp->next;
+        } while (ptrTemp != ptrHead);
+        return length;
+    }
+}
