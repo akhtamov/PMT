@@ -10,6 +10,7 @@ private:
 public:
     virtual void ReadShapeFromFile(ifstream& in);
     virtual void WriteShapeToFile(ofstream& out);
+    virtual float CalculateThePerimeter();
 };
 
 
@@ -23,6 +24,7 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+    float CalculateThePerimeter() override;
 };
 
 
@@ -35,5 +37,6 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+    float CalculateThePerimeter() override;
 };
 
