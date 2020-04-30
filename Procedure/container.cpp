@@ -54,6 +54,7 @@ bool readFile(string input)
         {
         case shape::CIRCLE: ptrCur->shp.tp = shape::CIRCLE; break;
         case shape::RECTANGLE: ptrCur->shp.tp = shape::RECTANGLE; break;
+        case shape::TRIANGLE: ptrCur->shp.tp = shape::TRIANGLE; break;
         }
 
         getline(file, line);
@@ -93,6 +94,25 @@ bool readFile(string input)
             getline(file, line);
             ptrCur->shp.rct.yRightDownCorner = atoi(line.c_str());
         }
+        else if (ptrCur->shp.tp == shape::TRIANGLE) {
+            getline(file, line);
+            ptrCur->shp.tr.x1 = atoi(line.c_str());
+
+            getline(file, line);
+            ptrCur->shp.tr.y1 = atoi(line.c_str());
+
+            getline(file, line);
+            ptrCur->shp.tr.x2 = atoi(line.c_str());
+
+            getline(file, line);
+            ptrCur->shp.tr.y2 = atoi(line.c_str());
+
+            getline(file, line);
+            ptrCur->shp.tr.x3 = atoi(line.c_str());
+
+            getline(file, line);
+            ptrCur->shp.tr.y3 = atoi(line.c_str());
+        }
         ptrCur = ptrCur->next;
     }
     return true;
@@ -112,6 +132,13 @@ bool out(list* ptrTemp, ofstream& outfile)
             << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
         outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
             << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
+    }
+    else if (ptrTemp->shp.tp == shape::TRIANGLE)
+    {
+        outfile << "Type of shape is TRIANGLE" << endl;
+        outfile << "Its coordinates are (" << ptrTemp->shp.tr.x1 << ", " << ptrTemp->shp.tr.y1
+            << "), (" << ptrTemp->shp.tr.x2 << ", " << ptrTemp->shp.tr.y2 << "), ("
+            << ptrTemp->shp.tr.x3 << ", " << ptrTemp->shp.tr.y3 << ")" << endl;
     }
     switch (ptrTemp->shp.clr) {
     case shape::RED: color = "red"; break;
