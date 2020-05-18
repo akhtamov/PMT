@@ -1,0 +1,15 @@
+Type of shape is CIRCLE
+Center's coordinates are (1, 1)
+Radius is 5
+Density is 1000
+Perimeter is 31.4
+Color is red
+
+Type of shape is RECTANGLE
+Left angle's coordinates are (1, 4)
+Right angle's coordinates are (6, 2)
+Density is 2000
+Perimeter is 14
+Color is red
+
+Number of shapes is 2

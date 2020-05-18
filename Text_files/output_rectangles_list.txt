@@ -1,0 +1,9 @@
+Only RECTANGLES: 
+Type of shape is RECTANGLE
+Left angle's coordinates are (1, 4)
+Right angle's coordinates are (6, 2)
+Density is 6
+Perimeter is 14
+Color is yellow
+
+Number of shapes is 3

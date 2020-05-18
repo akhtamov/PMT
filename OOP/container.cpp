@@ -3,7 +3,7 @@
 List* ptrHead = nullptr;
 List* ptrCur = nullptr;
 
-List* List::AddToList() {
+List* List::AddToList(List* ptrCur, List* ptrHead) {
     List* ptrNew;
     ptrNew = new List();
 
@@ -15,7 +15,7 @@ List* List::AddToList() {
     return ptrNew;
 }
 
-List* List::InitList() {
+List* List::InitList(List* ptrCur, List* ptrHead) {
     ptrHead = new List();
     ptrCur = new List();
     ptrHead->next = ptrHead;
@@ -24,18 +24,18 @@ List* List::InitList() {
     return ptrCur;
 }
 
-int List::In(ifstream& in) {
+List* List::In(ifstream& in, List *ptrCur, List *ptrHead) {
     string line;
     getline(in, line);
     int shapesCount = atoi(line.c_str());
     for (int i = 0; i < shapesCount; i++)
     {
         if (i == 0)
-        {
-            ptrHead = InitList();
+        { 
+            ptrHead = InitList(ptrCur, ptrHead);
             ptrCur = ptrHead;
         }
-        else ptrCur = AddToList();
+        else ptrCur = AddToList(ptrCur, ptrHead);
 
         getline(in, line);
         int type = atoi(line.c_str());
@@ -51,14 +51,19 @@ int List::In(ifstream& in) {
             ptrCur->shape->ReadShapeFromFile(in);
             break;
         }
+        case 2: {
+            ptrCur->shape = new Triangle();
+            ptrCur->shape->ReadShapeFromFile(in);
+            break;
+        }
 
         }
         ptrCur = ptrCur->next;
     }
-    return 1;
+    return ptrHead;
 }
 
-int List::Out(ofstream& out) {
+int List::Out(ofstream& out, List *ptrHead) {
     int shapesCount = 0;
     List* ptrTemp = ptrHead;
 
@@ -74,7 +79,7 @@ int List::Out(ofstream& out) {
 
 
 
-void List::Sort() {
+void List::Sort(List* ptrHead) {
     int length = GetListLength(ptrHead);
     List* ptrTemp_i = ptrHead;
     List* ptrTemp_j = ptrHead->next;
@@ -117,7 +122,7 @@ int List::GetListLength(List* ptrHead) {
     }
 }
 
-int List::OutRectangle(ofstream& out)
+int List::OutRectangle(ofstream& out, List * ptrHead)
 {
     int rectangleCount = 0;
     List* ptrTemp = ptrHead;

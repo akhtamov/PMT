@@ -1,5 +1,5 @@
 #include "shape.h"
-#include <string>
+
 using namespace std;
 
 struct list
@@ -10,13 +10,13 @@ struct list
 };
 
 struct list* list_init();
-struct list* add_to_list();
-bool readFile(string input);
-bool writeToFile(string output);
+struct list* add_to_list(list* ptrCur, list* ptrHead);
+list * readFile(ifstream& file, list * ptrHead);
+bool writeToFile(ofstream& outfile, list * ptrHead);
 float calculteThePerimeter(list*);
 int getListLength(list* ptrHead);
-void compare();
-void sortList();
+bool compare(list* first, list* second);
+void sortList(list* ptrHead);
 bool out(list*, ofstream& outfile);
-bool writeRectanglesToFile(string output);
+bool writeRectanglesToFile(ofstream& outfile, list* ptrHead);
 

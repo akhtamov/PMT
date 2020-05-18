@@ -1,0 +1,7 @@
+Type of shape is CIRCLE
+Center's coordinates are (0, 0)
+Radius is 5
+Perimeter is 31.4
+Density is 1000
+Color is cyan
+

@@ -1,0 +1,7 @@
+Type of shape is RECTANGLE
+Left angle's coordinates are (1, 4)
+Right angle's coordinates are (6, 2)
+Perimeter is 14
+Density is 1000
+Color is cyan
+

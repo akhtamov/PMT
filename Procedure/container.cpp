@@ -1,7 +1,7 @@
 #include "container.h"
 #include "stdlib.h"
-#include <iostream>
-#include <fstream>
+
+
 using namespace std;
 
 list* ptrHead = nullptr;
@@ -17,7 +17,7 @@ struct list* list_init()
     return ptrCur;
 }
 
-struct list* add_to_list()
+struct list* add_to_list(list * ptrCur, list * ptrHead)
 {
     struct list* ptrNew;
     ptrNew = new struct list;
@@ -30,13 +30,10 @@ struct list* add_to_list()
     return ptrNew;
 }
 
-bool readFile(string input)
+
+
+list * readFile(ifstream& file, list *ptrHead)
 {
-    ifstream file(input);
-    if (!file.is_open())
-    {
-        return false;
-    }
     string line;
     getline(file, line);
     int figuresCount = atoi(line.c_str());
@@ -47,7 +44,7 @@ bool readFile(string input)
             ptrHead = list_init();
             ptrCur = ptrHead;
         }
-        else ptrCur = add_to_list();
+        else ptrCur = add_to_list(ptrCur, ptrHead);
 
         getline(file, line);
         switch (atoi(line.c_str()))
@@ -68,7 +65,7 @@ bool readFile(string input)
         case shape::CYAN: ptrCur->shp.clr = shape::CYAN; break;
         case shape::PURPLE: ptrCur->shp.clr = shape::PURPLE; break;
         }
-        
+
         getline(file, line);
         ptrCur->shp.density = atof(line.c_str());
 
@@ -118,8 +115,11 @@ bool readFile(string input)
         }
         ptrCur = ptrCur->next;
     }
-    return true;
+   
+    return ptrHead;
 }
+    
+
 bool out(list* ptrTemp, ofstream& outfile)
 {
     string color;
@@ -162,11 +162,7 @@ bool out(list* ptrTemp, ofstream& outfile)
 
     return true;
 }
-bool writeToFile(string output) {
-    ofstream outfile(output);
-    if (!outfile.is_open()) {
-        return false;
-    }
+bool writeToFile(ofstream& outfile, list * ptrHead) {
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
     do {
@@ -186,6 +182,14 @@ float calculteThePerimeter(list *ptrTemp)
             + abs(ptrTemp->shp.rct.yLeftUpCorner - ptrTemp->shp.rct.yRightDownCorner));
     case shape::CIRCLE:
         return 2 * 3.14 * ptrTemp->shp.cr.radius;
+    case shape::TRIANGLE:
+    {
+        float first = sqrt(pow((ptrTemp->shp.tr.x2 - ptrTemp->shp.tr.x1), 2) + pow((ptrTemp->shp.tr.y2 - ptrTemp->shp.tr.y1), 2));
+        float second = sqrt(pow((ptrTemp->shp.tr.x2 - ptrTemp->shp.tr.x3), 2) + pow((ptrTemp->shp.tr.y2 - ptrTemp->shp.tr.y3), 2));
+        float third = sqrt(pow((ptrTemp->shp.tr.x3 - ptrTemp->shp.tr.x1), 2) + pow((ptrTemp->shp.tr.y3 - ptrTemp->shp.tr.y1), 2));
+        return first + second + third;
+    }
+
     }
 }
 
@@ -211,7 +215,7 @@ bool compare(list* first, list* second)
     return calculteThePerimeter(first) < calculteThePerimeter(second);
 }
 
-void sortList()
+void sortList(list* ptrHead)
 {
     int length = getListLength(ptrHead);
 
@@ -238,12 +242,8 @@ void sortList()
     }
 }
 
-bool writeRectanglesToFile(string output)
+bool writeRectanglesToFile(ofstream& outfile, list * ptrHead)
 {
-    ofstream outfile(output);
-    if (!outfile.is_open()) {
-        return false;
-    }
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
     outfile << "Only RECTANGLES: " << endl;

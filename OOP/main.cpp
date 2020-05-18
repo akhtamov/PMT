@@ -26,11 +26,14 @@ int main(int argc, char* argv[]) {
     }
 
     List* lst = new List();
-    lst->In(infile);
-    lst->Sort();
-    lst->Out(outfile);
-    //lst->OutRectangle(outfile);
+    List* ptrCur = nullptr;
+    List* ptrHead = nullptr;
+    ptrHead = lst->In(infile, ptrCur, ptrHead);
 
+    //lst->Sort(ptrHead);
+    lst->Out(outfile, ptrHead);
+    //lst->OutRectangle(outfile, ptrHead);
 
+ 
     return 0;
 }

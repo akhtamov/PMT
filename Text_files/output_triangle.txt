@@ -1,0 +1,6 @@
+Type of shape is TRIANGLE
+Point's coordinates are (0, 0), (3, 0), (0, 4)
+Perimeter is 12
+Density is 1000
+Color is cyan
+

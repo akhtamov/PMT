@@ -1,6 +1,6 @@
-#include <iostream>
-#include <string>
 #include "container.h"
+
+
 using namespace std;
 int main(int argc, char* argv[])
 {
@@ -13,11 +13,19 @@ int main(int argc, char* argv[])
     }
     inputPath = argv[1];
     outputPath = argv[2];
+   
+    ifstream file(inputPath);
+    ofstream outfile(outputPath);
 
-    readFile(inputPath);
-    sortList();
-    writeToFile(outputPath);
-    //writeRectanglesToFile(outputPath);
+    list* ptrHead = nullptr;
+
+    ptrHead = readFile(file, ptrHead);
+
+    
+    // sortList(ptrHead);
+    //writeToFile(outfile, ptrHead);
+
+    writeRectanglesToFile(outfile, ptrHead);
 
     return 0;
 }

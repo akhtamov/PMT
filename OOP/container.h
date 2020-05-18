@@ -11,20 +11,24 @@ class List
 {
 public:
 
+
     Shape* shape;
+    Rectangle * rectangle;
+    Circle * circle;
+    Triangle * triangle;
 
     List* prev;
     List* next;
 
-    List* InitList();
-    List* AddToList();
+    static List* InitList(List* ptrCur, List* ptrHead);
+    static List* AddToList(List* ptrCur, List* ptrHead);
     
-    int GetListLength(List* prtHead);
-    void Sort();
+    static int GetListLength(List* prtHead);
+    void Sort(List* ptrHead);
     
 
-    int In(ifstream& in);
-    int Out(ofstream& out);
-    int OutRectangle(ofstream& out);
+    List* In(ifstream& in, List *ptrCur, List *ptrHead);
+    int Out(ofstream& out, List* ptrHead);
+    int OutRectangle(ofstream& out, List* ptrHead);
 };
 
