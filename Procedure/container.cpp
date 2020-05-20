@@ -34,6 +34,11 @@ struct list* add_to_list(list * ptrCur, list * ptrHead)
 
 list * readFile(ifstream& file, list *ptrHead)
 {
+    if (!file.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
+
     string line;
     getline(file, line);
     int figuresCount = atoi(line.c_str());
@@ -47,6 +52,12 @@ list * readFile(ifstream& file, list *ptrHead)
         else ptrCur = add_to_list(ptrCur, ptrHead);
 
         getline(file, line);
+
+        if (atoi(line.c_str()) < 0 || atoi(line.c_str()) > 2)
+        {
+            throw std::invalid_argument("Error: unknown shape!");
+        }
+
         switch (atoi(line.c_str()))
         {
         case shape::CIRCLE: ptrCur->shp.tp = shape::CIRCLE; break;
@@ -55,6 +66,12 @@ list * readFile(ifstream& file, list *ptrHead)
         }
 
         getline(file, line);
+
+        if (atoi(line.c_str()) < 0 || atoi(line.c_str()) > 6)
+        {
+            throw std::invalid_argument("Error: unknown color!");
+        }
+
         switch (atoi(line.c_str()))
         {
         case shape::RED: ptrCur->shp.clr = shape::RED; break;
@@ -67,6 +84,11 @@ list * readFile(ifstream& file, list *ptrHead)
         }
 
         getline(file, line);
+        if (atof(line.c_str()) <= 0)
+        {
+            throw std::invalid_argument("Error: the density should be a positive number!");
+        }
+
         ptrCur->shp.density = atof(line.c_str());
 
         if (ptrCur->shp.tp == shape::CIRCLE)
@@ -78,6 +100,10 @@ list * readFile(ifstream& file, list *ptrHead)
             ptrCur->shp.cr.yCenter = atoi(line.c_str());
 
             getline(file, line);
+            if (atoi(line.c_str()) <= 0)
+            {
+                throw std::invalid_argument("Error: the radius should be a positive number!");
+            }
             ptrCur->shp.cr.radius = atoi(line.c_str());
 
         }
@@ -122,8 +148,18 @@ list * readFile(ifstream& file, list *ptrHead)
 
 bool out(list* ptrTemp, ofstream& outfile)
 {
+
+    if (!outfile.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     string color;
     if (ptrTemp->shp.tp == shape::CIRCLE) {
+        if (ptrTemp->shp.cr.radius <= 0)
+        {
+            throw std::invalid_argument("Error: the radius should be a positive number!");
+        }
         outfile << "Type of shape is CIRCLE" << endl;
         outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
             << endl;
@@ -144,6 +180,17 @@ bool out(list* ptrTemp, ofstream& outfile)
             << "), (" << ptrTemp->shp.tr.x2 << ", " << ptrTemp->shp.tr.y2 << "), ("
             << ptrTemp->shp.tr.x3 << ", " << ptrTemp->shp.tr.y3 << ")" << endl;
     }
+
+    if (ptrTemp->shp.density <= 0)
+    {
+        throw std::invalid_argument("Error: the density should be a positive number!");
+    }
+
+    if (calculteThePerimeter(ptrTemp) < 0)
+    {
+        throw std::invalid_argument("Error calculating perimeter");
+    }
+
     outfile << "Density is " << ptrTemp->shp.density << endl;
 
     outfile << "Perimeter is " << calculteThePerimeter(ptrTemp) << endl;
@@ -158,13 +205,25 @@ bool out(list* ptrTemp, ofstream& outfile)
     case shape::PURPLE: color = "purple"; break;
     default: color = "unknown color";
     }
+    if (color == "unknown color")
+    {
+        throw std::invalid_argument("Error: unknown color");
+    }
     outfile << "Color is " << color << endl << endl;
 
     return true;
 }
 bool writeToFile(ofstream& outfile, list * ptrHead) {
+    if (!outfile.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
+    if (ptrTemp == nullptr)
+    {
+        throw std::invalid_argument("Error: list is empty!");
+    }
     do {
         out(ptrTemp, outfile);
         ptrTemp = ptrTemp->next;
@@ -217,6 +276,11 @@ bool compare(list* first, list* second)
 
 void sortList(list* ptrHead)
 {
+    if (ptrHead == nullptr)
+    {
+        throw std::invalid_argument("Error: list is empty!");
+    }
+
     int length = getListLength(ptrHead);
 
     list* ptrTemp_i;
@@ -244,8 +308,19 @@ void sortList(list* ptrHead)
 
 bool writeRectanglesToFile(ofstream& outfile, list * ptrHead)
 {
+    if (!outfile.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     int figuresCount = 0;
     list* ptrTemp = ptrHead;
+
+    if (ptrTemp == nullptr)
+    {
+        throw std::invalid_argument("Error: list is empty!");
+    }
+
     outfile << "Only RECTANGLES: " << endl;
     do {
         if (ptrTemp->shp.tp == shape::RECTANGLE)

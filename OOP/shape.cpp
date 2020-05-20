@@ -3,8 +3,13 @@
 
 
 void Shape::ReadShapeFromFile(ifstream& in) {
-    string line;
 
+    if (!in.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
+
+    string line;
     // { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
 
     getline(in, line);
@@ -24,6 +29,11 @@ void Shape::ReadShapeFromFile(ifstream& in) {
 
 
 void Shape::WriteShapeToFile(ofstream& out) {
+
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
 
     out << "Density is " << _density << endl;
     string color;
@@ -50,6 +60,11 @@ float Shape::CalculateThePerimeter()
 
 void Circle::ReadShapeFromFile(ifstream& in) {
 
+    if (!in.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
+
     Shape::ReadShapeFromFile(in);
 
     string line;
@@ -66,6 +81,12 @@ void Circle::ReadShapeFromFile(ifstream& in) {
 
 
 void Circle::WriteShapeToFile(ofstream& out) {
+
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     out << "Type of shape is CIRCLE" << endl;
     out << "Center's coordinates are (" << _xCenter << ", " << _yCenter << ")"
         << endl;
@@ -82,6 +103,11 @@ float Circle::CalculateThePerimeter()
 
 void Circle::SetCircle(int x, int y, int radius)
 {
+    if (radius <= 0)
+    {
+        throw std::invalid_argument("The radius should be a positive number!");
+    }
+
     _xCenter = x;
     _yCenter = y;
     _radius = radius;
@@ -106,6 +132,11 @@ int Circle::GetRadius()
 
 void Rectangle::ReadShapeFromFile(ifstream& in) {
 
+    if (!in.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
+
     Shape::ReadShapeFromFile(in);
 
     string line;
@@ -124,6 +155,12 @@ void Rectangle::ReadShapeFromFile(ifstream& in) {
 }
 
 void Rectangle::WriteShapeToFile(ofstream& out) {
+
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     out << "Type of shape is RECTANGLE" << endl;
     out << "Left angle's coordinates are (" << _xLeftUpCorner << ", "
         << _yLeftUpCorner << ')' << endl;
@@ -146,12 +183,22 @@ bool Shape::Compare(Shape *other)
 
 void Shape::WriteRectangleToFile(ofstream& out)
 {
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writting file!");
+    }
+
     out << "";
 }
 
 
 void Rectangle::WriteRectangleToFile(ofstream& out)
 {
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     WriteShapeToFile(out);
 }
 
@@ -188,6 +235,11 @@ int Rectangle::GetYRightDownCorner()
 
 void Shape::SetColor(int value)
 {
+    if (value < 0 || value > 6)
+    {
+        throw std::invalid_argument("Error: unknown color!");
+    }
+
     switch (value) {
     case Shape::RED: clr = RED; break;
     case Shape::ORANGE: clr = ORANGE; break;
@@ -201,6 +253,10 @@ void Shape::SetColor(int value)
 
 void Shape::SetDensity(float value)
 {
+    if (value < 0)
+    {
+        throw std::invalid_argument("The density should be a positive number!");
+    }
     _density = value;
 }
 
@@ -224,6 +280,11 @@ void Triangle::SetTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
 
 void Triangle::ReadShapeFromFile(ifstream& in)
 {
+    if (!in.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
+
     Shape::ReadShapeFromFile(in);
 
     string line;
@@ -249,6 +310,11 @@ void Triangle::ReadShapeFromFile(ifstream& in)
 
 void Triangle::WriteShapeToFile(ofstream& out)
 {
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
     out << "Type of shape is TRIANGLE" << endl;
     out << "Point's coordinates are (" 
         << _x1 << ", " << _y1 << "), (" << _x2 << ", " << _y2 << "), (" << _x3 << ", " << _y3 << ")" << endl;

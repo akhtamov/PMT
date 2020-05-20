@@ -13,19 +13,25 @@ int main(int argc, char* argv[])
     }
     inputPath = argv[1];
     outputPath = argv[2];
-   
-    ifstream file(inputPath);
-    ofstream outfile(outputPath);
+   try{
+        ifstream file(inputPath);
+        file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        ofstream outfile(outputPath);
 
-    list* ptrHead = nullptr;
+        list* ptrHead = nullptr;
 
-    ptrHead = readFile(file, ptrHead);
-
-    
-    // sortList(ptrHead);
-    //writeToFile(outfile, ptrHead);
-
-    writeRectanglesToFile(outfile, ptrHead);
-
+        ptrHead = readFile(file, ptrHead);
+        //sortList(ptrHead);
+        writeToFile(outfile, ptrHead);
+        //writeRectanglesToFile(outfile, ptrHead);
+    }
+    catch (std::invalid_argument& ia)
+    {
+        std::cerr << ia.what();
+    }
+    catch (std::ifstream::failure f)
+    {
+        std::cerr << "Error reading input file";
+    }
     return 0;
 }

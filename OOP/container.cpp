@@ -4,6 +4,12 @@ List* ptrHead = nullptr;
 List* ptrCur = nullptr;
 
 List* List::AddToList(List* ptrCur, List* ptrHead) {
+
+    if (ptrHead == nullptr || ptrCur == nullptr)
+    {
+        throw std::invalid_argument("The list should be initialized first!");
+    }
+
     List* ptrNew;
     ptrNew = new List();
 
@@ -25,6 +31,10 @@ List* List::InitList(List* ptrCur, List* ptrHead) {
 }
 
 List* List::In(ifstream& in, List *ptrCur, List *ptrHead) {
+    if (!in.is_open())
+    {
+        throw std::invalid_argument("Error reading file!");
+    }
     string line;
     getline(in, line);
     int shapesCount = atoi(line.c_str());
@@ -64,9 +74,20 @@ List* List::In(ifstream& in, List *ptrCur, List *ptrHead) {
 }
 
 int List::Out(ofstream& out, List *ptrHead) {
+
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+
+    if (ptrHead == nullptr)
+    {
+        throw std::invalid_argument("List is empty!");
+    }
+
     int shapesCount = 0;
     List* ptrTemp = ptrHead;
-
+ 
     do {
         ptrTemp->shape->WriteShapeToFile(out);
         ptrTemp = ptrTemp->next;
@@ -80,6 +101,10 @@ int List::Out(ofstream& out, List *ptrHead) {
 
 
 void List::Sort(List* ptrHead) {
+    if (ptrHead == nullptr)
+    {
+        throw std::invalid_argument("List is empty!");
+    }
     int length = GetListLength(ptrHead);
     List* ptrTemp_i = ptrHead;
     List* ptrTemp_j = ptrHead->next;
@@ -124,6 +149,15 @@ int List::GetListLength(List* ptrHead) {
 
 int List::OutRectangle(ofstream& out, List * ptrHead)
 {
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Error writing file!");
+    }
+    
+    if (ptrHead == nullptr)
+    {
+        throw std::invalid_argument("List is empty!");
+    }
     int rectangleCount = 0;
     List* ptrTemp = ptrHead;
     out << "Only RECTANGLES: " << endl;
