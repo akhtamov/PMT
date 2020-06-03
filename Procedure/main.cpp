@@ -20,14 +20,12 @@ int main(int argc, char* argv[])
         List* head = nullptr;
 
         head = readFile(file, head);
-        //sortList(head);
+        //sortByPerimeter(head);
         writeToFile(outfile, head);
-        //writeRectanglesToFile(outfile, ptrHead);
-    }
-    catch (std::invalid_argument& ia) {
+        //writeRectanglesToFile(outfile, head);
+    } catch (std::invalid_argument& ia) {
         std::cerr << ia.what();
-    }
-    catch (std::ifstream::failure f) {
+    } catch (std::ifstream::failure f) {
         std::cerr << "Error reading input file";
     }
     return 0;

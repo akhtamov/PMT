@@ -17,7 +17,7 @@ struct List* initialize()
     return current;
 }
 
-struct List* addElement(List * current, List * head)
+List* addElement(List* current, List* head)
 {
     struct List* added;
     added = new struct List;
@@ -30,9 +30,7 @@ struct List* addElement(List * current, List * head)
     return added;
 }
 
-
-
-List * readFile(ifstream& file, List *head)
+List* readFile(ifstream& file, List* head)
 {
     if (!file.is_open()) {
         throw std::invalid_argument("Error reading file!");
@@ -55,15 +53,9 @@ List * readFile(ifstream& file, List *head)
         }
 
         switch (atoi (line.c_str())) {
-        case Shape::TYPE_CIRCLE : 
-            current->shape.type = Shape::TYPE_CIRCLE; 
-            break;
-        case Shape::TYPE_RECTANGLE : 
-            current->shape.type = Shape::TYPE_RECTANGLE; 
-            break;
-        case Shape::TYPE_TRIANGLE : 
-            current->shape.type = Shape::TYPE_TRIANGLE; 
-            break;
+        case Shape::TYPE_CIRCLE    : current->shape.type = Shape::TYPE_CIRCLE;    break;
+        case Shape::TYPE_RECTANGLE : current->shape.type = Shape::TYPE_RECTANGLE; break;
+        case Shape::TYPE_TRIANGLE  : current->shape.type = Shape::TYPE_TRIANGLE;  break;
         }
 
         getline(file, line);
@@ -102,8 +94,7 @@ List * readFile(ifstream& file, List *head)
             }
             current->shape.circle.radius = atoi(line.c_str());
 
-        }
-        else if (current->shape.type == Shape::TYPE_RECTANGLE) {
+        } else if (current->shape.type == Shape::TYPE_RECTANGLE) {
             getline(file, line);
             current->shape.rectangle.xLeftUpCorner = atoi(line.c_str());
 
@@ -115,8 +106,7 @@ List * readFile(ifstream& file, List *head)
 
             getline(file, line);
             current->shape.rectangle.yRightDownCorner = atoi(line.c_str());
-        }
-        else if (current->shape.type == Shape::TYPE_TRIANGLE) {
+        } else if (current->shape.type == Shape::TYPE_TRIANGLE) {
             getline(file, line);
             current->shape.triangle.x1 = atoi(line.c_str());
 
@@ -158,15 +148,13 @@ void out(List* temp, ofstream& outfile)
             << "Center's coordinates are (" << temp->shape.circle.xCenter << ", " 
                                             << temp->shape.circle.yCenter << ")"  << endl
             << "Radius is "                 << temp->shape.circle.radius          << endl;
-    }
-    else if (temp->shape.type == Shape::TYPE_RECTANGLE) {
+    } else if (temp->shape.type == Shape::TYPE_RECTANGLE) {
         outfile << "Type of shape is RECTANGLE"      << endl
             << "Left angle's coordinates are ("  << temp->shape.rectangle.xLeftUpCorner    << ", "
                                                  << temp->shape.rectangle.yLeftUpCorner    << ')'  << endl
             << "Right angle's coordinates are (" << temp->shape.rectangle.xRightDownCorner << ", "
             <<                                      temp->shape.rectangle.yRightDownCorner << ')'  << endl;
-    } 
-    else if (temp->shape.type == Shape::TYPE_TRIANGLE) {
+    } else if (temp->shape.type == Shape::TYPE_TRIANGLE) {
         outfile << "Type of shape is TRIANGLE" << endl
             << "Its coordinates are ("     << temp->shape.triangle.x1 << ", " << temp->shape.triangle.y1 << "), (" 
                                            << temp->shape.triangle.x2 << ", " << temp->shape.triangle.y2 << "), ("
@@ -199,9 +187,10 @@ void out(List* temp, ofstream& outfile)
     }
 
     outfile << "Density is "   << temp->shape.density    << endl
-        << "Perimeter is " << computePerimeter(temp) << endl
-        << "Color is "     << color                  << endl << endl;
+            << "Perimeter is " << computePerimeter(temp) << endl
+            << "Color is "     << color                  << endl << endl;
 }
+
 void writeToFile(ofstream& outfile, List* head) 
 {
     if (!outfile.is_open()) {
@@ -213,14 +202,14 @@ void writeToFile(ofstream& outfile, List* head)
         throw std::invalid_argument("Error: list is empty!");
     }
 
-    int figuresCount = 0;
+    int shapesCount = 0;
     do {
         out(temp, outfile);
         temp = temp->next;
-        figuresCount++;
+        shapesCount++;
     } while (temp != head);
 
-    outfile << "Number of shapes is " << figuresCount;
+    outfile << "Number of shapes is " << shapesCount;
 }
 
 float computePerimeter(List* temp)
@@ -302,7 +291,7 @@ void sortByPerimeter(List* head)
     }
 }
 
-void writeRectanglesToFile(ofstream& outfile, List * head)
+void writeRectanglesToFile(ofstream& outfile, List* head)
 {
     if (!outfile.is_open()) {
         throw std::invalid_argument("Error writing file!");

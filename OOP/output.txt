@@ -1,69 +1,21 @@
-<<<<<<< HEAD
-Type of shape is CIRCLE
-Center's coordinates are (1, 2)
-<<<<<<< HEAD
-Radius is 3
-<<<<<<< HEAD
-Destiny is 1201.5
-=======
-Perimeter is 18.84
->>>>>>> lab2.3
-=======
-Radius is 7
-Perimeter is 43.96
-Color is cyan
+Type of shape is RECTANGLE
+Left angle's coordinates are (1, 4)
+Right angle's coordinates are (6, 2)
+Density is 6
+Perimeter is 14
+Color is yellow
 
 Type of shape is CIRCLE
-Center's coordinates are (4, 2)
+Center's coordinates are (0, 0)
 Radius is 5
+Density is 5
 Perimeter is 31.4
->>>>>>> lab2.4
-Color is cyan
+Color is orange
 
-Type of shape is RECTANGLE
-Left angle's coordinates are (1, 2)
-<<<<<<< HEAD
-Right angle's coordinates are (3, 4)
-<<<<<<< HEAD
-Destiny is 680
-=======
-Perimeter is 8
->>>>>>> lab2.3
-=======
-Right angle's coordinates are (9, 6)
-Perimeter is 24
->>>>>>> lab2.4
-=======
-Only RECTANGLES: 
-Type of shape is RECTANGLE
-Left angle's coordinates are (1, 2)
-Right angle's coordinates are (3, 5)
->>>>>>> lab2.5
-Color is yellow
+Type of shape is TRIANGLE
+Its coordinates are (1, 2), (3, 4), (5, 6)
+Density is 7
+Perimeter is 11.3137
+Color is green
 
-Type of shape is CIRCLE
-Center's coordinates are (1, 2)
-Radius is 3
-Perimeter is 18.84
-Color is cyan
-
-Type of shape is RECTANGLE
-Left angle's coordinates are (1, 2)
-<<<<<<< HEAD
-<<<<<<< HEAD
-Right angle's coordinates are (3, 4)
-<<<<<<< HEAD
-Destiny is 435
-=======
-Perimeter is 8
->>>>>>> lab2.3
-=======
-Right angle's coordinates are (3, 5)
-Perimeter is 10
->>>>>>> lab2.4
-=======
-Right angle's coordinates are (9, 6)
->>>>>>> lab2.5
-Color is yellow
-
-Number of shapes is 5
+Number of shapes is 3
