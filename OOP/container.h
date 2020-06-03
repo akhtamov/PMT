@@ -11,24 +11,22 @@ class List
 {
 public:
 
-
     Shape* shape;
-    Rectangle * rectangle;
-    Circle * circle;
-    Triangle * triangle;
+    //Rectangle * rectangle;
+    //Circle * circle;
+   // Triangle * triangle;
 
     List* prev;
     List* next;
 
-    static List* InitList(List* ptrCur, List* ptrHead);
-    static List* AddToList(List* ptrCur, List* ptrHead);
+    static List* initialization(List* current, List* head);
+    static List* addElement(List* current, List* head);
     
-    static int GetListLength(List* prtHead);
-    void Sort(List* ptrHead);
+    static int getLength(List* head);
+    void sortByPerimeter(List* head);
     
-
-    List* In(ifstream& in, List *ptrCur, List *ptrHead);
-    int Out(ofstream& out, List* ptrHead);
-    int OutRectangle(ofstream& out, List* ptrHead);
+    List* readFromFile(ifstream& in, List* current, List* head);
+    int writeToFile(ofstream& out, List* head);
+    int writeRectanglesToFile(ofstream& out, List* head);
 };
 

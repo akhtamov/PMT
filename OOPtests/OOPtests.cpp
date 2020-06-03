@@ -19,11 +19,11 @@ namespace OOPtests
 			ifstream infile(inputPath);
 
 			Shape shape;
-			shape.ReadShapeFromFile(infile);
+			shape.readFromFile(infile);
 			infile.close();
 
-			Assert::IsTrue(shape.GetColor() == 1, L"Assert GetColor");
-			Assert::IsTrue(shape.GetDensity() == 100.5, L"Assert GetDensity");
+			Assert::IsTrue(shape.getColor() == 1, L"Assert GetColor");
+			Assert::IsTrue(shape.getDensity() == 100.5, L"Assert GetDensity");
 		}
 
 		TEST_METHOD(WriteToFile)
@@ -33,10 +33,10 @@ namespace OOPtests
 
 			Shape shape;
 
-			shape.SetColor(1);
-			shape.SetDensity(100.5);
+			shape.setColor(1);
+			shape.setDensity(100.5);
 
-			shape.WriteShapeToFile(outfile);
+			shape.writeToFile(outfile);
 			outfile.close();
 
 			ifstream infile(outputPath);
@@ -60,13 +60,13 @@ namespace OOPtests
 			ifstream infile(inputPath);
 
 			Rectangle rectangle;
-			rectangle.ReadShapeFromFile(infile);
+			rectangle.readFromFile(infile);
 			infile.close();
 
-			Assert::IsTrue(rectangle.GetXLeftUpCorner() == 1, L"Assert GetXLeftUpCorner");
-			Assert::IsTrue(rectangle.GetYLeftUpCorner() == 3, L"Assert GetYLeftUpCorner");
-			Assert::IsTrue(rectangle.GetXRightDownCorner() == 5, L"Assert GetXRightDownCorner");
-			Assert::IsTrue(rectangle.GetYRightDownCorner() == 1, L"Assert GetYRightDownCorner");
+			Assert::IsTrue(rectangle.getXLeftUpCorner() == 1, L"Assert GetXLeftUpCorner");
+			Assert::IsTrue(rectangle.getYLeftUpCorner() == 3, L"Assert GetYLeftUpCorner");
+			Assert::IsTrue(rectangle.getXRightDownCorner() == 5, L"Assert GetXRightDownCorner");
+			Assert::IsTrue(rectangle.getYRightDownCorner() == 1, L"Assert GetYRightDownCorner");
 		}
 
 		TEST_METHOD(WriteToFile)
@@ -75,11 +75,11 @@ namespace OOPtests
 			ofstream outfile(outputPath);
 
 			Rectangle rectangle;
-			rectangle.SetRectangle(1, 4, 6, 2);
-			rectangle.SetColor(5);
-			rectangle.SetDensity(1000);
+			rectangle.setRectangle(1, 4, 6, 2);
+			rectangle.setColor(5);
+			rectangle.setDensity(1000);
 
-			rectangle.WriteShapeToFile(outfile);
+			rectangle.writeToFile(outfile);
 			outfile.close();
 
 			ifstream infile(outputPath);
@@ -95,9 +95,9 @@ namespace OOPtests
 		TEST_METHOD(Perimeter)
 		{
 			Rectangle rectangle;
-			rectangle.SetRectangle(1, 3, 5, 1);
+			rectangle.setRectangle(1, 3, 5, 1);
 
-			Assert::IsTrue(rectangle.CalculateThePerimeter() == 12, L"Assert Rectangle");
+			Assert::IsTrue(rectangle.computePerimeter() == 12, L"Assert Rectangle");
 		}
 
 		TEST_METHOD(Compare)
@@ -105,14 +105,14 @@ namespace OOPtests
 			Rectangle rectangle;
 			Circle circle;
 
-			rectangle.SetRectangle(1, 4, 5, 2);
-			circle.SetCircle(0, 0, 2);
+			rectangle.setRectangle(1, 4, 5, 2);
+			circle.setCircle(0, 0, 2);
 
-			Assert::IsTrue(rectangle.Compare(&circle) == true, L"Assert Compare");
+			Assert::IsTrue(rectangle.isPerimeterLess(&circle) == true, L"Assert Compare");
 
-			circle.SetCircle(0, 0, 1);
+			circle.setCircle(0, 0, 1);
 
-			Assert::IsTrue(rectangle.Compare(&circle) == false, L"Assert Compare2");
+			Assert::IsTrue(rectangle.isPerimeterLess(&circle) == false, L"Assert Compare2");
 		}
 	};
 
@@ -125,12 +125,12 @@ namespace OOPtests
 			ifstream infile(inputPath);
 
 			Circle circle;
-			circle.ReadShapeFromFile(infile);
+			circle.readFromFile(infile);
 			infile.close();
 
-			Assert::IsTrue(circle.GetXCenter() == 3, L"Assert GetXCenter");
-			Assert::IsTrue(circle.GetYCenter() == 4, L"Assert GetYCenter");
-			Assert::IsTrue(circle.GetRadius() == 5, L"Assert GetRadius");
+			Assert::IsTrue(circle.getXCenter() == 3, L"Assert GetXCenter");
+			Assert::IsTrue(circle.getYCenter() == 4, L"Assert GetYCenter");
+			Assert::IsTrue(circle.getRadius() == 5, L"Assert GetRadius");
 
 		}
 
@@ -140,11 +140,11 @@ namespace OOPtests
 			ofstream outfile(outputPath);
 
 			Circle circle;
-			circle.SetCircle(0, 0, 5);
-			circle.SetColor(5);
-			circle.SetDensity(1000);
+			circle.setCircle(0, 0, 5);
+			circle.setColor(5);
+			circle.setDensity(1000);
 
-			circle.WriteShapeToFile(outfile);
+			circle.writeToFile(outfile);
 			outfile.close();
 
 			ifstream infile(outputPath);
@@ -160,9 +160,9 @@ namespace OOPtests
 		TEST_METHOD(Perimeter)
 		{
 			Circle circle;
-			circle.SetCircle(0, 0, 5);
+			circle.setCircle(0, 0, 5);
 
-			float result = floor(circle.CalculateThePerimeter() * 10 / 10);
+			float result = floor(circle.computePerimeter() * 10 / 10);
 
 			Assert::IsTrue(result == floor((31.4 * 10) / 10), L"Assert Circle");
 		}
@@ -172,14 +172,14 @@ namespace OOPtests
 			Rectangle rectangle;
 			Circle circle;
 
-			rectangle.SetRectangle(1, 4, 5, 2);
-			circle.SetCircle(0, 0, 2);
+			rectangle.setRectangle(1, 4, 5, 2);
+			circle.setCircle(0, 0, 2);
 
-			Assert::IsTrue(circle.Compare(&rectangle) == false, L"Assert Compare");
+			Assert::IsTrue(circle.isPerimeterLess(&rectangle) == false, L"Assert Compare");
 
-			circle.SetCircle(0, 0, 1);
+			circle.setCircle(0, 0, 1);
 
-			Assert::IsTrue(circle.Compare(&rectangle) == true, L"Assert Compare2");
+			Assert::IsTrue(circle.isPerimeterLess(&rectangle) == true, L"Assert Compare2");
 		}
 	};
 
@@ -192,15 +192,15 @@ namespace OOPtests
 			ifstream infile(inputPath);
 
 			Triangle triangle;
-			triangle.ReadShapeFromFile(infile);
+			triangle.readFromFile(infile);
 			infile.close();
 
-			Assert::IsTrue(triangle.GetX1() == 1, L"Assert GetX1");
-			Assert::IsTrue(triangle.GetY1() == 2, L"Assert GetY1");
-			Assert::IsTrue(triangle.GetX2() == 3, L"Assert GetX2");
-			Assert::IsTrue(triangle.GetY2() == 4, L"Assert GetY2");
-			Assert::IsTrue(triangle.GetX3() == 5, L"Assert GetX3");
-			Assert::IsTrue(triangle.GetY3() == 6, L"Assert GetY3");
+			Assert::IsTrue(triangle.getX1() == 1, L"Assert GetX1");
+			Assert::IsTrue(triangle.getY1() == 2, L"Assert GetY1");
+			Assert::IsTrue(triangle.getX2() == 3, L"Assert GetX2");
+			Assert::IsTrue(triangle.getY2() == 4, L"Assert GetY2");
+			Assert::IsTrue(triangle.getX3() == 5, L"Assert GetX3");
+			Assert::IsTrue(triangle.getY3() == 6, L"Assert GetY3");
 		}
 
 		TEST_METHOD(WriteToFile)
@@ -209,11 +209,11 @@ namespace OOPtests
 			ofstream outfile(outputPath);
 
 			Triangle triangle;
-			triangle.SetTriangle(0, 0, 3, 0, 0, 4);
-			triangle.SetColor(5);
-			triangle.SetDensity(1000);
+			triangle.setTriangle(0, 0, 3, 0, 0, 4);
+			triangle.setColor(5);
+			triangle.setDensity(1000);
 
-			triangle.WriteShapeToFile(outfile);
+			triangle.writeToFile(outfile);
 			outfile.close();
 
 			ifstream infile(outputPath);
@@ -229,11 +229,11 @@ namespace OOPtests
 		TEST_METHOD(Perimeter)
 		{
 			Triangle triangle;
-			triangle.SetTriangle(0, 0, 3, 0, 0, 4);
+			triangle.setTriangle(0, 0, 3, 0, 0, 4);
 
-			float result = triangle.CalculateThePerimeter();
+			float result = triangle.computePerimeter();
 
-			Assert::IsTrue(triangle.CalculateThePerimeter() == 12, L"Assert Circle");
+			Assert::IsTrue(triangle.computePerimeter() == 12, L"Assert Circle");
 		}
 
 		TEST_METHOD(Compare)
@@ -241,14 +241,14 @@ namespace OOPtests
 			Rectangle rectangle;
 			Triangle triangle;
 
-			rectangle.SetRectangle(1, 4, 5, 2);
-			triangle.SetTriangle(0, 0, 3, 0, 0, 4);
+			rectangle.setRectangle(1, 4, 5, 2);
+			triangle.setTriangle(0, 0, 3, 0, 0, 4);
 
-			Assert::IsTrue(triangle.Compare(&rectangle) == false, L"Assert Compare");
+			Assert::IsTrue(triangle.isPerimeterLess(&rectangle) == false, L"Assert Compare");
 
-			rectangle.SetRectangle(1, 4, 10, 2);
+			rectangle.setRectangle(1, 4, 10, 2);
 
-			Assert::IsTrue(triangle.Compare(&rectangle) == true, L"Assert Compare2");
+			Assert::IsTrue(triangle.isPerimeterLess(&rectangle) == true, L"Assert Compare2");
 		}
 	};
 
@@ -259,38 +259,38 @@ namespace OOPtests
 		{
 			List* ptrHead = nullptr;
 			List* ptrCur = nullptr;
-			ptrCur = List::InitList(ptrCur, ptrHead);
+			ptrCur = List::initialization(ptrCur, ptrHead);
 			ptrHead = ptrCur;
 			ptrCur->shape = new Shape();
-			ptrCur->shape->SetColor(1);
-			ptrCur->shape->SetDensity(1000);
+			ptrCur->shape->setColor(1);
+			ptrCur->shape->setDensity(1000);
 
-			Assert::IsTrue(ptrCur->shape->GetColor() == 1);
-			Assert::IsTrue(ptrCur->shape->GetDensity() == 1000);
-
-			ptrCur = ptrCur->next;
-
-			ptrCur = List::AddToList(ptrCur, ptrHead);
-			ptrCur->shape = new Shape();
-			ptrCur->shape->SetColor(2);
-			ptrCur->shape->SetDensity(2000);
-			Assert::IsTrue(ptrCur->shape->GetColor() == 2);
-			Assert::IsTrue(ptrCur->shape->GetDensity() == 2000);
+			Assert::IsTrue(ptrCur->shape->getColor() == 1);
+			Assert::IsTrue(ptrCur->shape->getDensity() == 1000);
 
 			ptrCur = ptrCur->next;
 
-			ptrCur = List::AddToList(ptrCur, ptrHead);
+			ptrCur = List::addElement(ptrCur, ptrHead);
 			ptrCur->shape = new Shape();
-			ptrCur->shape->SetColor(3);
-			ptrCur->shape->SetDensity(3000);
+			ptrCur->shape->setColor(2);
+			ptrCur->shape->setDensity(2000);
+			Assert::IsTrue(ptrCur->shape->getColor() == 2);
+			Assert::IsTrue(ptrCur->shape->getDensity() == 2000);
 
-			Assert::IsTrue(ptrCur->shape->GetColor() == 3);
-			Assert::IsTrue(ptrCur->shape->GetDensity() == 3000);
+			ptrCur = ptrCur->next;
+
+			ptrCur = List::addElement(ptrCur, ptrHead);
+			ptrCur->shape = new Shape();
+			ptrCur->shape->setColor(3);
+			ptrCur->shape->setDensity(3000);
+
+			Assert::IsTrue(ptrCur->shape->getColor() == 3);
+			Assert::IsTrue(ptrCur->shape->getDensity() == 3000);
 	
 			ptrCur = ptrCur->prev;
 
-			Assert::IsTrue(ptrCur->shape->GetColor() == 2);
-			Assert::IsTrue(ptrCur->shape->GetDensity() == 2000);
+			Assert::IsTrue(ptrCur->shape->getColor() == 2);
+			Assert::IsTrue(ptrCur->shape->getDensity() == 2000);
 
 
 		}
@@ -300,19 +300,19 @@ namespace OOPtests
 			List* ptrHead = nullptr;
 			List* ptrCur = nullptr;
 	
-			ptrCur = List::InitList(ptrCur, ptrHead);
+			ptrCur = List::initialization(ptrCur, ptrHead);
 			ptrHead = ptrCur;
 
 			ptrCur = ptrCur->next;
-			ptrCur = List::AddToList(ptrCur, ptrHead);
+			ptrCur = List::addElement(ptrCur, ptrHead);
 
 			ptrCur = ptrCur->next;
-			ptrCur = List::AddToList(ptrCur, ptrHead);
+			ptrCur = List::addElement(ptrCur, ptrHead);
 
 			ptrCur = ptrCur->next;
-			ptrCur = List::AddToList(ptrCur, ptrHead);
+			ptrCur = List::addElement(ptrCur, ptrHead);
 
-			int length = List::GetListLength(ptrHead);
+			int length = List::getLength(ptrHead);
 			Assert::IsTrue(length == 4);
 
 
@@ -328,17 +328,17 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List * ptrHead = new List();
 
-			ptrHead = list->In(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
 			infile.close();
 			
 			ptrCur = ptrHead;
-			Assert::IsTrue(ptrCur->shape->GetColor() == 2, L"Alert 1");
+			Assert::IsTrue(ptrCur->shape->getColor() == 2, L"Alert 1");
 
 			ptrCur = ptrCur->next;
-			Assert::IsTrue(ptrCur->shape->GetColor() == 1, L"Alert 2");
+			Assert::IsTrue(ptrCur->shape->getColor() == 1, L"Alert 2");
 
 			ptrCur = ptrCur->next;
-			Assert::IsTrue(ptrCur->shape->GetColor() == 3, L"Alert 3");
+			Assert::IsTrue(ptrCur->shape->getColor() == 3, L"Alert 3");
 		}
 
 		TEST_METHOD(ListOut)
@@ -351,10 +351,10 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List* ptrHead = new List();
 
-			ptrHead = list->In(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
 			infile.close();
 
-			list->Out(outfile, ptrHead);
+			list->writeToFile(outfile, ptrHead);
 			outfile.close();
 
 			ifstream check(outputPath);
@@ -396,10 +396,10 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List* ptrHead = new List();
 
-			ptrHead = list->In(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
 			infile.close();
 
-			list->OutRectangle(outfile, ptrHead);
+			list->writeRectanglesToFile(outfile, ptrHead);
 			outfile.close();
 
 			ifstream check(outputPath);
@@ -429,12 +429,12 @@ namespace OOPtests
 			List* list = new List();
 			List* ptrCur = nullptr;
 			List* ptrHead = nullptr;
-			ptrHead = list->In(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
 			infile.close();
 
-			list->Sort(ptrHead);
+			list->sortByPerimeter(ptrHead);
 
-			list->Out(outfile, ptrHead);
+			list->writeToFile(outfile, ptrHead);
 			outfile.close();
 
 			ifstream check(outputPath);

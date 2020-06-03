@@ -1,173 +1,158 @@
 #include "container.h"
 
-List* ptrHead = nullptr;
-List* ptrCur = nullptr;
+List* head = nullptr;
+List* current = nullptr;
 
-List* List::AddToList(List* ptrCur, List* ptrHead) {
+List* List::addElement(List* current, List* head) {
 
-    if (ptrHead == nullptr || ptrCur == nullptr)
-    {
+    if (head == nullptr || current == nullptr) {
         throw std::invalid_argument("The list should be initialized first!");
     }
 
-    List* ptrNew;
-    ptrNew = new List();
+    List* added = new List();
 
-    ptrNew->next = ptrHead;
-    ptrNew->prev = ptrCur->prev;
-    ptrCur->prev->next = ptrNew;
-    ptrCur->prev = ptrNew;
+    added->next = head;
+    added->prev = current->prev;
+    current->prev->next = added;
+    current->prev = added;
 
-    return ptrNew;
+    return added;
 }
 
-List* List::InitList(List* ptrCur, List* ptrHead) {
-    ptrHead = new List();
-    ptrCur = new List();
-    ptrHead->next = ptrHead;
-    ptrHead->prev = ptrHead;
-    ptrCur = ptrHead;
-    return ptrCur;
+List* List::initialization(List* current, List* head) {
+    head = new List();
+    current = new List();
+    head->next = head;
+    head->prev = head;
+    current = head;
+    return current;
 }
 
-List* List::In(ifstream& in, List *ptrCur, List *ptrHead) {
-    if (!in.is_open())
-    {
+List* List::readFromFile(ifstream& in, List* current, List* head) {
+    if (!in.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
+
     string line;
     getline(in, line);
+
     int shapesCount = atoi(line.c_str());
-    for (int i = 0; i < shapesCount; i++)
-    {
-        if (i == 0)
-        { 
-            ptrHead = InitList(ptrCur, ptrHead);
-            ptrCur = ptrHead;
+    for (int i = 0; i < shapesCount; i++) {
+        if (i == 0) { 
+            head = initialization(current, head);
+            current = head;
         }
-        else ptrCur = AddToList(ptrCur, ptrHead);
+        else 
+            current = addElement(current, head);
 
         getline(in, line);
         int type = atoi(line.c_str());
-        switch (type)
-        {
+        switch (type) {
         case 0: {
-            ptrCur->shape = new Circle();
-            ptrCur->shape->ReadShapeFromFile(in);
+            current->shape = new Circle();
+            current->shape->readFromFile(in);
             break;
         }
         case 1: {
-            ptrCur->shape = new Rectangle();
-            ptrCur->shape->ReadShapeFromFile(in);
+            current->shape = new Rectangle();
+            current->shape->readFromFile(in);
             break;
         }
         case 2: {
-            ptrCur->shape = new Triangle();
-            ptrCur->shape->ReadShapeFromFile(in);
+            current->shape = new Triangle();
+            current->shape->readFromFile(in);
             break;
         }
-
         }
-        ptrCur = ptrCur->next;
+        current = current->next;
     }
-    return ptrHead;
+    return head;
 }
 
-int List::Out(ofstream& out, List *ptrHead) {
+int List::writeToFile(ofstream& out, List *head) {
 
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    if (ptrHead == nullptr)
-    {
+    if (head == nullptr) {
         throw std::invalid_argument("List is empty!");
     }
 
     int shapesCount = 0;
-    List* ptrTemp = ptrHead;
+    List* temp = head;
  
     do {
-        ptrTemp->shape->WriteShapeToFile(out);
-        ptrTemp = ptrTemp->next;
+        temp->shape->writeToFile(out);
+        temp = temp->next;
         shapesCount++;
-    } while (ptrTemp != ptrHead);
+    } while (temp != head);
 
     out << "Number of shapes is " << shapesCount;
     return 1;
 }
 
-
-
-void List::Sort(List* ptrHead) {
-    if (ptrHead == nullptr)
-    {
+void List::sortByPerimeter(List* head) {
+    if (head == nullptr) {
         throw std::invalid_argument("List is empty!");
     }
-    int length = GetListLength(ptrHead);
-    List* ptrTemp_i = ptrHead;
-    List* ptrTemp_j = ptrHead->next;
-    Shape *shape_j = ptrTemp_j->shape;
-    for (int i = 0; i < length - 1; i++)
-    {
-        ptrTemp_i = ptrHead;
-        for (int copy_i = 0; copy_i != i; copy_i++)
-        {
-            ptrTemp_i = ptrTemp_i->next;
+    int length = getLength(head);
+    List* first = head;
+    List* second = head->next;
+    Shape *shape = second->shape;
+    for (int i = 0; i < length - 1; i++) {
+        first = head;
+        for (int ii = 0; ii != i; ii++) {
+            first = first->next;
         }
-        ptrTemp_j = ptrTemp_i->next;
-        shape_j = ptrTemp_j->shape;
-        for (int j = i + 1; j < length; j++)
-        {
-            if (ptrTemp_i->shape->Compare(shape_j))
-            {
-                Shape *tmp = ptrTemp_i->shape;
-                ptrTemp_i->shape = shape_j;
-                ptrTemp_j->shape = tmp;
+        second = first->next;
+        shape = second->shape;
+        for (int j = i + 1; j < length; j++) {
+            if (first->shape->isPerimeterLess(shape)) {
+                Shape *tmp = first->shape;
+                first->shape = shape;
+                second->shape = tmp;
             }
-            ptrTemp_j = ptrTemp_j->next;
-            shape_j = ptrTemp_j->shape;
+            second = second->next;
+            shape = second->shape;
         } 
     }
 }
 
-int List::GetListLength(List* ptrHead) {
-    if (ptrHead == nullptr) {
+int List::getLength(List* head) {
+    if (head == nullptr) {
         return 0;
-    }
+    } 
     else {
-        List* ptrTemp = ptrHead;
+        List* temp = head;
         int length = 0;
         do {
             length++;
-            ptrTemp = ptrTemp->next;
-        } while (ptrTemp != ptrHead);
+            temp = temp->next;
+        } while (temp != head);
         return length;
     }
 }
 
-int List::OutRectangle(ofstream& out, List * ptrHead)
+int List::writeRectanglesToFile(ofstream& out, List * head)
 {
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
     
-    if (ptrHead == nullptr)
-    {
+    if (head == nullptr) {
         throw std::invalid_argument("List is empty!");
     }
-    int rectangleCount = 0;
-    List* ptrTemp = ptrHead;
+    int rectanglesCount = 0;
+    List* temp = head;
     out << "Only RECTANGLES: " << endl;
     do {
-        ptrTemp->shape->WriteRectangleToFile(out);
-        ptrTemp = ptrTemp->next;
-        rectangleCount++;
-    } while (ptrTemp != ptrHead);
+        temp->shape->writeRectangleToFile(out);
+        temp = temp->next;
+        rectanglesCount++;
+    } while (temp != head);
 
-    out << "Number of shapes is " << rectangleCount;
+    out << "Number of shapes is " << rectanglesCount;
     return 1;
 
 }

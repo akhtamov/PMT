@@ -13,13 +13,13 @@ namespace PPtests
 		TEST_METHOD(Perimeter)
 		{
 
-			list* ptr = new list();
+			List* ptr = new List();
 
-			ptr->shp.tp = shape::CIRCLE;
-			ptr->shp.cr.xCenter = 0;
-			ptr->shp.cr.yCenter = 0;
-			ptr->shp.cr.radius = 5;
-			float result = round(calculteThePerimeter(ptr) * 10.) / 10.;
+			ptr->shape.type = Shape::TYPE_CIRCLE;
+			ptr->shape.circle.xCenter = 0;
+			ptr->shape.circle.yCenter = 0;
+			ptr->shape.circle.radius = 5;
+			float result = round(computePerimeter(ptr) * 10.) / 10.;
 			float example = (31.4 * 10.) / 10.;
 
 			Assert::IsTrue(result == example, L"Assert Circle");
@@ -32,27 +32,27 @@ namespace PPtests
 			ofstream outfile3(outputPath);
 
 
-			list* ptr1 = new list();
+			List* ptr1 = new List();
 
-			ptr1->shp.tp = shape::CIRCLE;
-			ptr1->shp.cr.xCenter = 0;
-			ptr1->shp.cr.yCenter = 0;
-			ptr1->shp.cr.radius = 5;
+			ptr1->shape.type = Shape::TYPE_CIRCLE;
+			ptr1->shape.circle.xCenter = 0;
+			ptr1->shape.circle.yCenter = 0;
+			ptr1->shape.circle.radius = 5;
 
-			list* ptr2 = new list();
+			List* ptr2 = new List();
 
-			ptr2->shp.tp = shape::RECTANGLE;
-			ptr2->shp.rct.xLeftUpCorner = 1;
-			ptr2->shp.rct.yLeftUpCorner = 5;
-			ptr2->shp.rct.xRightDownCorner = 6;
-			ptr2->shp.rct.yRightDownCorner = 2;
+			ptr2->shape.type = Shape::TYPE_RECTANGLE;
+			ptr2->shape.rectangle.xLeftUpCorner = 1;
+			ptr2->shape.rectangle.yLeftUpCorner = 5;
+			ptr2->shape.rectangle.xRightDownCorner = 6;
+			ptr2->shape.rectangle.yRightDownCorner = 2;
 
 
-			Assert::IsTrue(compare(ptr1, ptr2) == false, L"Assert 1");
+			Assert::IsTrue(isPerimeterLess(ptr1, ptr2) == false, L"Assert 1");
 
-			ptr1->shp.cr.radius = 2;
+			ptr1->shape.circle.radius = 2;
 
-			Assert::IsTrue(compare(ptr1, ptr2) == true, L"Assert 2");
+			Assert::IsTrue(isPerimeterLess(ptr1, ptr2) == true, L"Assert 2");
 
 		}
 	};
@@ -65,13 +65,13 @@ namespace PPtests
 			string inputPath = "../../Text_files/input_list.txt";
 			ifstream infile(inputPath);
 
-			list* ptrHead = nullptr;
+			List* ptrHead = nullptr;
 
 			ptrHead = readFile(infile, ptrHead);
 
-			Assert::IsTrue(ptrHead->shp.tp == 1, L"Assert tp");
-			Assert::IsTrue(ptrHead->shp.clr == 2, L"Assert clr");
-			Assert::IsTrue(ptrHead->shp.rct.xRightDownCorner == 6, L"Assert x");
+			Assert::IsTrue(ptrHead->shape.type == 1, L"Assert tp");
+			Assert::IsTrue(ptrHead->shape.color == 2, L"Assert clr");
+			Assert::IsTrue(ptrHead->shape.rectangle.xRightDownCorner == 6, L"Assert x");
 		};
 
 
@@ -82,7 +82,7 @@ namespace PPtests
 			ifstream infile(inputPath);
 			ofstream file(outputPath);
 
-			list* ptrHead = nullptr;
+			List* ptrHead = nullptr;
 
 			ptrHead = readFile(infile, ptrHead);
 
@@ -113,7 +113,7 @@ namespace PPtests
 			ifstream infile(inputPath);
 			ofstream file(outputPath);
 
-			list* ptrHead = nullptr;
+			List* ptrHead = nullptr;
 
 			ptrHead = readFile(infile, ptrHead);
 
@@ -158,33 +158,33 @@ namespace PPtests
 		TEST_METHOD(ListInitAdd)
 		{
 
-			list* ptrHead = nullptr;
-			ptrHead = list_init();
-			list* ptrCur = ptrHead;
+			List* ptrHead = nullptr;
+			ptrHead = initialize();
+			List* ptrCur = ptrHead;
 
-			ptrCur->shp.tp = shape::CIRCLE;
-			ptrCur->shp.clr = shape::RED;
-			ptrCur->shp.cr.radius = 5;
-
-			ptrCur = ptrCur->next;
-			ptrCur = add_to_list(ptrCur, ptrHead);
-
-			ptrCur->shp.tp = shape::RECTANGLE;
-			ptrCur->shp.clr = shape::ORANGE;
-			ptrCur->shp.rct.xLeftUpCorner = 1;
+			ptrCur->shape.type = Shape::TYPE_CIRCLE;
+			ptrCur->shape.color = Shape::COLOR_RED;
+			ptrCur->shape.circle.radius = 5;
 
 			ptrCur = ptrCur->next;
-			ptrCur = add_to_list(ptrCur, ptrHead);
+			ptrCur = addElement(ptrCur, ptrHead);
+
+			ptrCur->shape.type = Shape::TYPE_RECTANGLE;
+			ptrCur->shape.color = Shape::COLOR_ORANGE;
+			ptrCur->shape.rectangle.xLeftUpCorner = 1;
+
+			ptrCur = ptrCur->next;
+			ptrCur = addElement(ptrCur, ptrHead);
 
 			ptrCur = ptrCur->prev;
 
-			Assert::IsTrue(ptrCur->shp.tp == 1, L"Assert tp");
-			Assert::IsTrue(ptrCur->shp.clr == 1, L"Assert clr");
-			Assert::IsTrue(ptrCur->shp.rct.xLeftUpCorner == 1, L"Assert x");
+			Assert::IsTrue(ptrCur->shape.type == 1, L"Assert tp");
+			Assert::IsTrue(ptrCur->shape.color == 1, L"Assert clr");
+			Assert::IsTrue(ptrCur->shape.rectangle.xLeftUpCorner == 1, L"Assert x");
 
-			Assert::IsTrue(ptrHead->shp.tp == 0, L"Assert tp");
-			Assert::IsTrue(ptrHead->shp.clr == 0, L"Assert clr");
-			Assert::IsTrue(ptrHead->shp.cr.radius == 5, L"Assert r");
+			Assert::IsTrue(ptrHead->shape.type == 0, L"Assert tp");
+			Assert::IsTrue(ptrHead->shape.color == 0, L"Assert clr");
+			Assert::IsTrue(ptrHead->shape.circle.radius == 5, L"Assert r");
 
 
 		};
@@ -198,11 +198,11 @@ namespace PPtests
 			ifstream infile(inputPath);
 			ofstream file(outputPath);
 
-			list* ptrHead = nullptr;
+			List* ptrHead = nullptr;
 
 			ptrHead = readFile(infile, ptrHead);
 
-			sortList(ptrHead);
+			sortByPerimeter(ptrHead);
 
 			writeToFile(file, ptrHead);
 
@@ -240,20 +240,20 @@ namespace PPtests
 
 		TEST_METHOD(ListLength)
 		{
-			list* ptrHead;
-			ptrHead = list_init();				   // 1
-			list* ptrCur = ptrHead;
+			List* ptrHead;
+			ptrHead = initialize();				   // 1
+			List* ptrCur = ptrHead;
 			ptrCur = ptrCur->next;
 
-			ptrCur = add_to_list(ptrCur, ptrHead); // 2
+			ptrCur = addElement(ptrCur, ptrHead); // 2
 			ptrCur = ptrCur->next;
 
-			ptrCur = add_to_list(ptrCur, ptrHead); // 3
+			ptrCur = addElement(ptrCur, ptrHead); // 3
 			ptrCur = ptrCur->next;
 
-			ptrCur = add_to_list(ptrCur, ptrHead); // 4
+			ptrCur = addElement(ptrCur, ptrHead); // 4
 
-			Assert::IsTrue(getListLength(ptrHead) == 4);
+			Assert::IsTrue(getLength(ptrHead) == 4);
 
 		};
 

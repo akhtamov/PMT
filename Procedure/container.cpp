@@ -4,331 +4,323 @@
 
 using namespace std;
 
-list* ptrHead = nullptr;
-list* ptrCur = nullptr;
+List* head = nullptr;
+List* current = nullptr;
 
-struct list* list_init()
+struct List* initialize()
 {
-    ptrHead = new struct list;
-    ptrCur = new struct list;
-    ptrHead->next = ptrHead;
-    ptrHead->prev = ptrHead;
-    ptrCur = ptrHead;
-    return ptrCur;
+    head = new struct List;
+    current = new struct List;
+    head->next = head;
+    head->prev = head;
+    current = head;
+    return current;
 }
 
-struct list* add_to_list(list * ptrCur, list * ptrHead)
+struct List* addElement(List * current, List * head)
 {
-    struct list* ptrNew;
-    ptrNew = new struct list;
+    struct List* added;
+    added = new struct List;
 
-    ptrNew->next = ptrHead;
-    ptrNew->prev = ptrCur->prev;
-    ptrCur->prev->next = ptrNew;
-    ptrCur->prev = ptrNew;
+    added->next = head;
+    added->prev = current->prev;
+    current->prev->next = added;
+    current->prev = added;
 
-    return ptrNew;
+    return added;
 }
 
 
 
-list * readFile(ifstream& file, list *ptrHead)
+List * readFile(ifstream& file, List *head)
 {
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
 
     string line;
-    getline(file, line);
+    getline (file, line);
     int figuresCount = atoi(line.c_str());
-    for (int i = 0; i < figuresCount; i++)
-    {
-        if (i == 0)
-        {
-            ptrHead = list_init();
-            ptrCur = ptrHead;
-        }
-        else ptrCur = add_to_list(ptrCur, ptrHead);
+    for (int i = 0; i < figuresCount; i++) {
+        if (i == 0) {
+            head = initialize();
+            current = head;
+        } else 
+            current = addElement(current, head);
 
         getline(file, line);
 
-        if (atoi(line.c_str()) < 0 || atoi(line.c_str()) > 2)
-        {
+        if (atoi(line.c_str()) < 0 || atoi(line.c_str()) > 2) {
             throw std::invalid_argument("Error: unknown shape!");
         }
 
-        switch (atoi(line.c_str()))
-        {
-        case shape::CIRCLE: ptrCur->shp.tp = shape::CIRCLE; break;
-        case shape::RECTANGLE: ptrCur->shp.tp = shape::RECTANGLE; break;
-        case shape::TRIANGLE: ptrCur->shp.tp = shape::TRIANGLE; break;
+        switch (atoi (line.c_str())) {
+        case Shape::TYPE_CIRCLE : 
+            current->shape.type = Shape::TYPE_CIRCLE; 
+            break;
+        case Shape::TYPE_RECTANGLE : 
+            current->shape.type = Shape::TYPE_RECTANGLE; 
+            break;
+        case Shape::TYPE_TRIANGLE : 
+            current->shape.type = Shape::TYPE_TRIANGLE; 
+            break;
         }
 
         getline(file, line);
 
-        if (atoi(line.c_str()) < 0 || atoi(line.c_str()) > 6)
-        {
+        if (atoi (line.c_str()) < 0 || atoi (line.c_str()) > 6) {
             throw std::invalid_argument("Error: unknown color!");
         }
 
-        switch (atoi(line.c_str()))
-        {
-        case shape::RED: ptrCur->shp.clr = shape::RED; break;
-        case shape::ORANGE: ptrCur->shp.clr = shape::ORANGE; break;
-        case shape::YELLOW: ptrCur->shp.clr = shape::YELLOW; break;
-        case shape::GREEN: ptrCur->shp.clr = shape::GREEN; break;
-        case shape::BLUE: ptrCur->shp.clr = shape::BLUE; break;
-        case shape::CYAN: ptrCur->shp.clr = shape::CYAN; break;
-        case shape::PURPLE: ptrCur->shp.clr = shape::PURPLE; break;
+        switch (atoi(line.c_str())) {
+        case Shape::COLOR_RED    : current->shape.color = Shape::COLOR_RED;    break;
+        case Shape::COLOR_ORANGE : current->shape.color = Shape::COLOR_ORANGE; break;
+        case Shape::COLOR_YELLOW : current->shape.color = Shape::COLOR_YELLOW; break;
+        case Shape::COLOR_GREEN  : current->shape.color = Shape::COLOR_GREEN;  break;
+        case Shape::COLOR_BLUE   : current->shape.color = Shape::COLOR_BLUE;   break;
+        case Shape::COLOR_CYAN   : current->shape.color = Shape::COLOR_CYAN;   break;
+        case Shape::COLOR_PURPLE : current->shape.color = Shape::COLOR_PURPLE; break;
         }
 
         getline(file, line);
-        if (atof(line.c_str()) <= 0)
-        {
+        if (atof(line.c_str()) <= 0) {
             throw std::invalid_argument("Error: the density should be a positive number!");
         }
 
-        ptrCur->shp.density = atof(line.c_str());
+        current->shape.density = atof(line.c_str());
 
-        if (ptrCur->shp.tp == shape::CIRCLE)
-        {
+        if (current->shape.type == Shape::TYPE_CIRCLE) {
             getline(file, line);
-            ptrCur->shp.cr.xCenter = atoi(line.c_str());
-
-            getline(file, line);
-            ptrCur->shp.cr.yCenter = atoi(line.c_str());
+            current->shape.circle.xCenter = atoi(line.c_str());
 
             getline(file, line);
-            if (atoi(line.c_str()) <= 0)
-            {
+            current->shape.circle.yCenter = atoi(line.c_str());
+
+            getline(file, line);
+            if (atoi(line.c_str()) <= 0) {
                 throw std::invalid_argument("Error: the radius should be a positive number!");
             }
-            ptrCur->shp.cr.radius = atoi(line.c_str());
+            current->shape.circle.radius = atoi(line.c_str());
 
         }
-        else if (ptrCur->shp.tp == shape::RECTANGLE) {
+        else if (current->shape.type == Shape::TYPE_RECTANGLE) {
             getline(file, line);
-            ptrCur->shp.rct.xLeftUpCorner = atoi(line.c_str());
+            current->shape.rectangle.xLeftUpCorner = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.rct.yLeftUpCorner = atoi(line.c_str());
+            current->shape.rectangle.yLeftUpCorner = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.rct.xRightDownCorner = atoi(line.c_str());
+            current->shape.rectangle.xRightDownCorner = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.rct.yRightDownCorner = atoi(line.c_str());
+            current->shape.rectangle.yRightDownCorner = atoi(line.c_str());
         }
-        else if (ptrCur->shp.tp == shape::TRIANGLE) {
+        else if (current->shape.type == Shape::TYPE_TRIANGLE) {
             getline(file, line);
-            ptrCur->shp.tr.x1 = atoi(line.c_str());
+            current->shape.triangle.x1 = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.tr.y1 = atoi(line.c_str());
+            current->shape.triangle.y1 = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.tr.x2 = atoi(line.c_str());
+            current->shape.triangle.x2 = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.tr.y2 = atoi(line.c_str());
+            current->shape.triangle.y2 = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.tr.x3 = atoi(line.c_str());
+            current->shape.triangle.x3 = atoi(line.c_str());
 
             getline(file, line);
-            ptrCur->shp.tr.y3 = atoi(line.c_str());
+            current->shape.triangle.y3 = atoi(line.c_str());
         }
-        ptrCur = ptrCur->next;
+        current = current->next;
     }
    
-    return ptrHead;
+    return head;
 }
     
 
-bool out(list* ptrTemp, ofstream& outfile)
+void out(List* temp, ofstream& outfile)
 {
 
-    if (!outfile.is_open())
-    {
+    if (!outfile.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
     string color;
-    if (ptrTemp->shp.tp == shape::CIRCLE) {
-        if (ptrTemp->shp.cr.radius <= 0)
-        {
+    if (temp->shape.type == Shape::TYPE_CIRCLE) {
+        if (temp->shape.circle.radius <= 0) {
             throw std::invalid_argument("Error: the radius should be a positive number!");
         }
-        outfile << "Type of shape is CIRCLE" << endl;
-        outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
-            << endl;
-        outfile << "Radius is " << ptrTemp->shp.cr.radius << endl;
+        outfile << "Type of shape is CIRCLE"                                          << endl
+            << "Center's coordinates are (" << temp->shape.circle.xCenter << ", " 
+                                            << temp->shape.circle.yCenter << ")"  << endl
+            << "Radius is "                 << temp->shape.circle.radius          << endl;
     }
-    else if (ptrTemp->shp.tp == shape::RECTANGLE) {
-        outfile << "Type of shape is RECTANGLE" << endl;
-        outfile << "Left angle's coordinates are (" << ptrTemp->shp.rct.xLeftUpCorner << ", "
-            << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
-        outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
-            << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
-    }
-
-    else if (ptrTemp->shp.tp == shape::TRIANGLE)
-    {
-        outfile << "Type of shape is TRIANGLE" << endl;
-        outfile << "Its coordinates are (" << ptrTemp->shp.tr.x1 << ", " << ptrTemp->shp.tr.y1
-            << "), (" << ptrTemp->shp.tr.x2 << ", " << ptrTemp->shp.tr.y2 << "), ("
-            << ptrTemp->shp.tr.x3 << ", " << ptrTemp->shp.tr.y3 << ")" << endl;
+    else if (temp->shape.type == Shape::TYPE_RECTANGLE) {
+        outfile << "Type of shape is RECTANGLE"      << endl
+            << "Left angle's coordinates are ("  << temp->shape.rectangle.xLeftUpCorner    << ", "
+                                                 << temp->shape.rectangle.yLeftUpCorner    << ')'  << endl
+            << "Right angle's coordinates are (" << temp->shape.rectangle.xRightDownCorner << ", "
+            <<                                      temp->shape.rectangle.yRightDownCorner << ')'  << endl;
+    } 
+    else if (temp->shape.type == Shape::TYPE_TRIANGLE) {
+        outfile << "Type of shape is TRIANGLE" << endl
+            << "Its coordinates are ("     << temp->shape.triangle.x1 << ", " << temp->shape.triangle.y1 << "), (" 
+                                           << temp->shape.triangle.x2 << ", " << temp->shape.triangle.y2 << "), ("
+                                           << temp->shape.triangle.x3 << ", " << temp->shape.triangle.y3 << ")" << endl;
     }
 
-    if (ptrTemp->shp.density <= 0)
-    {
+    if (temp->shape.density <= 0) {
         throw std::invalid_argument("Error: the density should be a positive number!");
     }
 
-    if (calculteThePerimeter(ptrTemp) < 0)
-    {
-        throw std::invalid_argument("Error calculating perimeter");
+    if (computePerimeter(temp) < 0) {
+        throw std::invalid_argument("Error computing perimeter");
     }
 
-    outfile << "Density is " << ptrTemp->shp.density << endl;
+   
 
-    outfile << "Perimeter is " << calculteThePerimeter(ptrTemp) << endl;
-
-    switch (ptrTemp->shp.clr) {
-    case shape::RED: color = "red"; break;
-    case shape::ORANGE: color = "orange"; break;
-    case shape::YELLOW: color = "yellow"; break;
-    case shape::GREEN: color = "green"; break;
-    case shape::BLUE: color = "blue"; break;
-    case shape::CYAN: color = "cyan"; break;
-    case shape::PURPLE: color = "purple"; break;
-    default: color = "unknown color";
+    switch (temp->shape.color) {
+    case Shape::COLOR_RED    : color = "red";    break;
+    case Shape::COLOR_ORANGE : color = "orange"; break;
+    case Shape::COLOR_YELLOW : color = "yellow"; break;
+    case Shape::COLOR_GREEN  : color = "green";  break;
+    case Shape::COLOR_BLUE   : color = "blue";   break;
+    case Shape::COLOR_CYAN   : color = "cyan";   break;
+    case Shape::COLOR_PURPLE : color = "purple"; break;
+    default                  : color = "unknown color";
     }
-    if (color == "unknown color")
-    {
+
+    if (color == "unknown color") {
         throw std::invalid_argument("Error: unknown color");
     }
-    outfile << "Color is " << color << endl << endl;
 
-    return true;
+    outfile << "Density is "   << temp->shape.density    << endl
+        << "Perimeter is " << computePerimeter(temp) << endl
+        << "Color is "     << color                  << endl << endl;
 }
-bool writeToFile(ofstream& outfile, list * ptrHead) {
-    if (!outfile.is_open())
-    {
+void writeToFile(ofstream& outfile, List* head) 
+{
+    if (!outfile.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
-    int figuresCount = 0;
-    list* ptrTemp = ptrHead;
-    if (ptrTemp == nullptr)
-    {
+
+    List* temp = head;
+    if (temp == nullptr) {
         throw std::invalid_argument("Error: list is empty!");
     }
+
+    int figuresCount = 0;
     do {
-        out(ptrTemp, outfile);
-        ptrTemp = ptrTemp->next;
+        out(temp, outfile);
+        temp = temp->next;
         figuresCount++;
-    } while (ptrTemp != ptrHead);
+    } while (temp != head);
+
     outfile << "Number of shapes is " << figuresCount;
-    return true;
 }
 
-float calculteThePerimeter(list *ptrTemp)
+float computePerimeter(List* temp)
 {
-    switch (ptrTemp->shp.tp){
-    case shape::RECTANGLE:
-        return 2 * (abs(ptrTemp->shp.rct.xLeftUpCorner - ptrTemp->shp.rct.xRightDownCorner)
-            + abs(ptrTemp->shp.rct.yLeftUpCorner - ptrTemp->shp.rct.yRightDownCorner));
-    case shape::CIRCLE:
-        return 2 * 3.14 * ptrTemp->shp.cr.radius;
-    case shape::TRIANGLE:
-    {
-        float first = sqrt(pow((ptrTemp->shp.tr.x2 - ptrTemp->shp.tr.x1), 2) + pow((ptrTemp->shp.tr.y2 - ptrTemp->shp.tr.y1), 2));
-        float second = sqrt(pow((ptrTemp->shp.tr.x2 - ptrTemp->shp.tr.x3), 2) + pow((ptrTemp->shp.tr.y2 - ptrTemp->shp.tr.y3), 2));
-        float third = sqrt(pow((ptrTemp->shp.tr.x3 - ptrTemp->shp.tr.x1), 2) + pow((ptrTemp->shp.tr.y3 - ptrTemp->shp.tr.y1), 2));
+    switch (temp->shape.type) {
+
+    case Shape::TYPE_RECTANGLE: {
+        int x1 = temp->shape.rectangle.xRightDownCorner,
+            x2 = temp->shape.rectangle.xLeftUpCorner,
+            y1 = temp->shape.rectangle.yRightDownCorner,
+            y2 = temp->shape.rectangle.yLeftUpCorner;
+        return 2 * (abs(x2 - x1) + abs(y2 - y1));
+    }
+
+    case Shape::TYPE_CIRCLE :
+        return 2 * 3.14 * temp->shape.circle.radius;
+
+    case Shape::TYPE_TRIANGLE : {
+        float first = sqrt(pow((temp->shape.triangle.x2 - temp->shape.triangle.x1), 2) 
+                        + pow((temp->shape.triangle.y2 - temp->shape.triangle.y1), 2));
+
+        float second = sqrt(pow((temp->shape.triangle.x2 - temp->shape.triangle.x3), 2)
+                        + pow((temp->shape.triangle.y2 - temp->shape.triangle.y3), 2));
+
+        float third = sqrt(pow((temp->shape.triangle.x3 - temp->shape.triangle.x1), 2) 
+                       + pow((temp->shape.triangle.y3 - temp->shape.triangle.y1), 2));
+
         return first + second + third;
     }
-
     }
 }
 
-int getListLength(list* ptrHead)
+int getLength(List* head)
 {
-    if (ptrHead == nullptr)
-    {
+    if (head == nullptr) {
         return 0;
     }
-    list *ptrTemp = ptrHead;    
+    List *temp = head;    
     int length = 0;
 
     do {
-        ptrTemp = ptrTemp->next;
+        temp = temp->next;
         length++;
-    } while (ptrTemp != ptrHead);
+    } while (temp != head);
 
     return length;
 }
 
-bool compare(list* first, list* second) 
+bool isPerimeterLess(List* first, List* second) 
 { 
-    return calculteThePerimeter(first) < calculteThePerimeter(second);
+    return computePerimeter(first) < computePerimeter(second);
 }
 
-void sortList(list* ptrHead)
+void sortByPerimeter(List* head)
 {
-    if (ptrHead == nullptr)
-    {
+    if (head == nullptr) {
         throw std::invalid_argument("Error: list is empty!");
     }
 
-    int length = getListLength(ptrHead);
+    int length = getLength(head);
 
-    list* ptrTemp_i;
-    list* ptrTemp_j;
+    List* first;
+    List* second;
     for (int i = 0; i < length - 1; i++) {
-
-        ptrTemp_i = ptrHead;
-        for (int copy_i = 0; copy_i != i; copy_i++)
-        {
-            ptrTemp_i = ptrTemp_i->next;
+        first = head;
+        for (int copy_i = 0; copy_i != i; copy_i++) {
+            first = first->next;
         }
-        ptrTemp_j = ptrTemp_i->next;
+        second = first->next;
 
-        for (int j = i + 1; j < length; j++){
-            if (compare(ptrTemp_i, ptrTemp_j))
-            {
-                shape tmp = ptrTemp_i->shp;
-                ptrTemp_i->shp = ptrTemp_j->shp;
-                ptrTemp_j->shp = tmp;
+        for (int j = i + 1; j < length; j++) {
+            if (isPerimeterLess(first, second)) {
+                Shape temp = first->shape;
+                first->shape = second->shape;
+                second->shape = temp;
             }
-            ptrTemp_j = ptrTemp_j->next;
+            second = second->next;
         }   
     }
 }
 
-bool writeRectanglesToFile(ofstream& outfile, list * ptrHead)
+void writeRectanglesToFile(ofstream& outfile, List * head)
 {
-    if (!outfile.is_open())
-    {
+    if (!outfile.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    int figuresCount = 0;
-    list* ptrTemp = ptrHead;
-
-    if (ptrTemp == nullptr)
-    {
+    List* temp = head;
+    if (temp == nullptr) {
         throw std::invalid_argument("Error: list is empty!");
     }
 
     outfile << "Only RECTANGLES: " << endl;
+    int figuresCount = 0;
     do {
-        if (ptrTemp->shp.tp == shape::RECTANGLE)
-            out(ptrTemp, outfile);
-        ptrTemp = ptrTemp->next;
+        if (temp->shape.type == Shape::TYPE_RECTANGLE)
+            out(temp, outfile);
+        temp = temp->next;
         figuresCount++;
-    } while (ptrTemp != ptrHead);
+    } while (temp != head);
     outfile << "Number of shapes is " << figuresCount;
-    return true;
 
 }

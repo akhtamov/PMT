@@ -2,189 +2,174 @@
 #include <string>
 
 
-void Shape::ReadShapeFromFile(ifstream& in) {
+void Shape::readFromFile(ifstream& in) 
+{
 
-    if (!in.is_open())
-    {
+    if (!in.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
 
     string line;
-    // { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
-
     getline(in, line);
-    switch (atoi(line.c_str()))
-    {
-    case Shape::RED: clr = Shape::RED; break;
-    case Shape::ORANGE: clr = Shape::ORANGE; break;
-    case Shape::YELLOW: clr = Shape::YELLOW; break;
-    case Shape::GREEN: clr = Shape::GREEN; break;
-    case Shape::BLUE: clr = Shape::BLUE; break;
-    case Shape::CYAN: clr = Shape::CYAN; break;
-    case Shape::PURPLE: clr = Shape::PURPLE; break;
+
+    switch (atoi(line.c_str())) {
+    case Shape::COLOR_RED    : color_ = Shape::COLOR_RED;    break;
+    case Shape::COLOR_ORANGE : color_ = Shape::COLOR_ORANGE; break;
+    case Shape::COLOR_YELLOW : color_ = Shape::COLOR_YELLOW; break;
+    case Shape::COLOR_GREEN  : color_ = Shape::COLOR_GREEN;  break;
+    case Shape::COLOR_BLUE   : color_ = Shape::COLOR_BLUE;   break;
+    case Shape::COLOR_CYAN   : color_ = Shape::COLOR_CYAN;   break;
+    case Shape::COLOR_PURPLE : color_ = Shape::COLOR_PURPLE; break;
     }
     getline(in, line);
-    _density = atof(line.c_str());
+    density_ = atof(line.c_str());
 }
 
 
-void Shape::WriteShapeToFile(ofstream& out) {
+void Shape::writeToFile(ofstream& out) 
+{
 
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    out << "Density is " << _density << endl;
     string color;
-    switch (clr) {
-    case Shape::RED: color = "red"; break;
-    case Shape::ORANGE: color = "orange"; break;
-    case Shape::YELLOW: color = "yellow"; break;
-    case Shape::GREEN: color = "green"; break;
-    case Shape::BLUE: color = "blue"; break;
-    case Shape::CYAN: color = "cyan"; break;
-    case Shape::PURPLE: color = "purple"; break;
-    default: color = "unknown color";
+    switch (color_) {
+    case Shape::COLOR_RED    : color = "red";    break;
+    case Shape::COLOR_ORANGE : color = "orange"; break;
+    case Shape::COLOR_YELLOW : color = "yellow"; break;
+    case Shape::COLOR_GREEN  : color = "green";  break;
+    case Shape::COLOR_BLUE   : color = "blue";   break;
+    case Shape::COLOR_CYAN   : color = "cyan";   break;
+    case Shape::COLOR_PURPLE : color = "purple"; break;
+    default                  : color = "unknown color";
     }
-    out << "Color is " << color<< "\n\n";
+    out << "Density is " << density_ << endl
+        << "Color is "   << color    << endl << endl;
 
 }
 
-
-float Shape::CalculateThePerimeter()
+float Shape::computePerimeter()
 {
     return 0;
 }
 
+void Circle::readFromFile(ifstream& in) 
+{
 
-void Circle::ReadShapeFromFile(ifstream& in) {
-
-    if (!in.is_open())
-    {
+    if (!in.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
 
-    Shape::ReadShapeFromFile(in);
+    Shape::readFromFile(in);
 
     string line;
+    getline(in, line);
+    xCenter_ = atoi(line.c_str());
 
     getline(in, line);
-    _xCenter = atoi(line.c_str());
+    yCenter_ = atoi(line.c_str());
 
     getline(in, line);
-    _yCenter = atoi(line.c_str());
-
-    getline(in, line);
-    _radius = atoi(line.c_str());
+    radius_ = atoi(line.c_str());
 }
 
-
-void Circle::WriteShapeToFile(ofstream& out) {
-
-    if (!out.is_open())
-    {
+void Circle::writeToFile(ofstream& out) 
+{
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    out << "Type of shape is CIRCLE" << endl;
-    out << "Center's coordinates are (" << _xCenter << ", " << _yCenter << ")"
-        << endl;
-    out << "Radius is " << _radius << endl;
-    out << "Perimeter is " << CalculateThePerimeter() << endl;
-    Shape::WriteShapeToFile(out);
+    out << "Type of shape is CIRCLE"                                           << endl
+        << "Center's coordinates are (" << xCenter_ << ", " << yCenter_ << ")" << endl
+        << "Radius is "                 << radius_                             << endl
+        << "Perimeter is "              << computePerimeter()                  << endl;
+    Shape::writeToFile(out);
 }
 
 
-float Circle::CalculateThePerimeter()
+float Circle::computePerimeter()
 {
-    return (float)2 * 3.14 * _radius;
+    return (float)2 * 3.14 * radius_;
 }
 
-void Circle::SetCircle(int x, int y, int radius)
+void Circle::setCircle(int x, int y, int radius)
 {
-    if (radius <= 0)
-    {
+    if (radius <= 0) {
         throw std::invalid_argument("The radius should be a positive number!");
     }
 
-    _xCenter = x;
-    _yCenter = y;
-    _radius = radius;
+    xCenter_ = x;
+    yCenter_ = y;
+    radius_ = radius;
 }
 
 
-int Circle::GetXCenter()
+int Circle::getXCenter()
 {
-    return _xCenter;
+    return xCenter_;
 }
 
-int Circle::GetYCenter()
+int Circle::getYCenter()
 {
-    return _yCenter;
+    return yCenter_;
 }
 
-int Circle::GetRadius()
+int Circle::getRadius()
 {
-    return _radius;
+    return radius_;
 }
 
 
-void Rectangle::ReadShapeFromFile(ifstream& in) {
+void Rectangle::readFromFile(ifstream& in) {
 
-    if (!in.is_open())
-    {
+    if (!in.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
 
-    Shape::ReadShapeFromFile(in);
+    Shape::readFromFile(in);
 
     string line;
+    getline(in, line);
+    xLeftUpCorner_ = atoi(line.c_str());
 
     getline(in, line);
-    _xLeftUpCorner = atoi(line.c_str());
+    yLeftUpCorner_ = atoi(line.c_str());
 
     getline(in, line);
-    _yLeftUpCorner = atoi(line.c_str());
+    xRightDownCorner_ = atoi(line.c_str());
 
     getline(in, line);
-    _xRightDownCorner = atoi(line.c_str());
-
-    getline(in, line);
-    _yRightDownCorner = atoi(line.c_str());
+    yRightDownCorner_ = atoi(line.c_str());
 }
 
-void Rectangle::WriteShapeToFile(ofstream& out) {
+void Rectangle::writeToFile(ofstream& out) {
 
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    out << "Type of shape is RECTANGLE" << endl;
-    out << "Left angle's coordinates are (" << _xLeftUpCorner << ", "
-        << _yLeftUpCorner << ')' << endl;
-    out << "Right angle's coordinates are (" << _xRightDownCorner << ", "
-        << _yRightDownCorner << ')' << endl;
-    out << "Perimeter is " << CalculateThePerimeter() << endl;
-    Shape::WriteShapeToFile(out);
+    out << "Type of shape is RECTANGLE" << endl
+        << "Left angle's coordinates are ("  << xLeftUpCorner_     << ", " << yLeftUpCorner_    << ')' << endl
+        << "Right angle's coordinates are (" << xRightDownCorner_  << ", " << yRightDownCorner_ << ')' << endl
+        << "Perimeter is "                   << computePerimeter()                                     << endl;
+    Shape::writeToFile(out);
 }
 
 
-float Rectangle::CalculateThePerimeter()
+float Rectangle::computePerimeter()
 {
-    return floor (2 * ( abs(_xLeftUpCorner - _xRightDownCorner) + abs(_yLeftUpCorner - _yRightDownCorner) ) * 100) / 100;
+    return floor (2 * ( abs(xLeftUpCorner_ - xRightDownCorner_) + abs(yLeftUpCorner_ - yRightDownCorner_) ) * 100) / 100;
 }
 
-bool Shape::Compare(Shape *other)
+bool Shape::isPerimeterLess(Shape *other)
 {
-    return CalculateThePerimeter() < other->CalculateThePerimeter();
+    return computePerimeter() < other->computePerimeter();
 }
 
-void Shape::WriteRectangleToFile(ofstream& out)
+void Shape::writeRectangleToFile(ofstream& out)
 {
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writting file!");
     }
 
@@ -192,100 +177,96 @@ void Shape::WriteRectangleToFile(ofstream& out)
 }
 
 
-void Rectangle::WriteRectangleToFile(ofstream& out)
+void Rectangle::writeRectangleToFile(ofstream& out)
 {
-    if (!out.is_open())
-    {
+    if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
     }
 
-    WriteShapeToFile(out);
+    writeToFile(out);
 }
 
-void Rectangle::SetRectangle(int x1, int y1, int x2, int y2)
+void Rectangle::setRectangle(int x1, int y1, int x2, int y2)
 {
-    _xLeftUpCorner = x1;
-    _yLeftUpCorner = y1;
-    _xRightDownCorner = x2;
-    _yRightDownCorner = y2;
+    xLeftUpCorner_ = x1;
+    yLeftUpCorner_ = y1;
+    xRightDownCorner_ = x2;
+    yRightDownCorner_ = y2;
 }   
 
 
-int Rectangle::GetXLeftUpCorner()
+int Rectangle::getXLeftUpCorner()
 {
-    return _xLeftUpCorner;
+    return xLeftUpCorner_;
 }
 
-int Rectangle::GetYLeftUpCorner()
+int Rectangle::getYLeftUpCorner()
 {
-    return _yLeftUpCorner;
+    return yLeftUpCorner_;
 }
 
-int Rectangle::GetXRightDownCorner()
+int Rectangle::getXRightDownCorner()
 {
-    return _xRightDownCorner;
+    return xRightDownCorner_;
 }
 
-int Rectangle::GetYRightDownCorner()
+int Rectangle::getYRightDownCorner()
 {
-    return _yRightDownCorner;
+    return yRightDownCorner_;
 }
 
-
-
-void Shape::SetColor(int value)
+void Shape::setColor(int value)
 {
-    if (value < 0 || value > 6)
-    {
+    if (value < 0 || value > 6) {
         throw std::invalid_argument("Error: unknown color!");
     }
 
     switch (value) {
-    case Shape::RED: clr = RED; break;
-    case Shape::ORANGE: clr = ORANGE; break;
-    case Shape::YELLOW: clr = YELLOW; break;
-    case Shape::GREEN: clr = GREEN; break;
-    case Shape::BLUE: clr = BLUE; break;
-    case Shape::CYAN: clr = CYAN; break;
-    case Shape::PURPLE: clr = PURPLE; break;
+    case Shape::COLOR_RED    : color_ = COLOR_RED;    break;
+    case Shape::COLOR_ORANGE : color_ = COLOR_ORANGE; break;
+    case Shape::COLOR_YELLOW : color_ = COLOR_YELLOW; break;
+    case Shape::COLOR_GREEN  : color_ = COLOR_GREEN;  break;
+    case Shape::COLOR_BLUE   : color_ = COLOR_BLUE;   break;
+    case Shape::COLOR_CYAN   : color_ = COLOR_CYAN;   break;
+    case Shape::COLOR_PURPLE : color_ = COLOR_PURPLE; break;
     }
 }
 
-void Shape::SetDensity(float value)
+void Shape::setDensity(float value)
 {
     if (value < 0)
     {
         throw std::invalid_argument("The density should be a positive number!");
     }
-    _density = value;
+    density_ = value;
 }
 
 
-int Shape::GetColor()
+int Shape::getColor()
 {
-    return clr;
+    return color_;
 }
 
-float Shape::GetDensity()
+float Shape::getDensity()
 {
-    return _density;
+    return density_;
 }
 
-void Triangle::SetTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
+void Triangle::setTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
 {
-    _x1 = x1; _y1 = y1;
-    _x2 = x2; _y2 = y2;
-    _x3 = x3; _y3 = y3;
+    x1_ = x1; y1_ = y1;
+    x2_ = x2; y2_ = y2;
+    x3_ = x3; y3_ = y3;
 }
 
-void Triangle::ReadShapeFromFile(ifstream& in)
+void Triangle::readFromFile(ifstream& in)
 {
     if (!in.is_open())
     {
         throw std::invalid_argument("Error reading file!");
     }
 
-    Shape::ReadShapeFromFile(in);
+    Shape::readFromFile(in);
 
     string line;
 
@@ -304,59 +285,58 @@ void Triangle::ReadShapeFromFile(ifstream& in)
     getline(in, line);
     int y3 = atoi(line.c_str());
 
-    SetTriangle(x1, y1, x2, y2, x3, y3);
+    setTriangle(x1, y1, x2, y2, x3, y3);
 
 }
 
-void Triangle::WriteShapeToFile(ofstream& out)
+void Triangle::writeToFile(ofstream& out)
 {
     if (!out.is_open())
     {
         throw std::invalid_argument("Error writing file!");
     }
 
-    out << "Type of shape is TRIANGLE" << endl;
-    out << "Point's coordinates are (" 
-        << _x1 << ", " << _y1 << "), (" << _x2 << ", " << _y2 << "), (" << _x3 << ", " << _y3 << ")" << endl;
-    out << "Perimeter is " << CalculateThePerimeter() << endl;
-    Shape::WriteShapeToFile(out);
+    out << "Type of shape is TRIANGLE"                                  << endl
+        << "Point's coordinates are (" << x1_ << ", " << y1_ << "), (" 
+                                       << x2_ << ", " << y2_ << "), (" 
+                                       << x3_ << ", " << y3_ << ")"     << endl;
+    out << "Perimeter is "             << computePerimeter()            << endl;
+    Shape::writeToFile(out);
 }
 
-float Triangle::CalculateThePerimeter()
+float Triangle::computePerimeter()
 {
-    float first = sqrt(pow( (_x2 - _x1), 2) + pow( (_y2 - _y1), 2) );
-    float second = sqrt(pow( (_x2 - _x3), 2) + pow ((_y2 - _y3), 2));
-    float third = sqrt( pow( (_x3 - _x1), 2) + pow( (_y3 - _y1), 2));
-
-    return first + second + third;
+    return sqrt(pow((x2_ - x1_), 2) + pow((y2_ - y1_), 2)) +
+           sqrt(pow((x2_ - x3_), 2) + pow((y2_ - y3_), 2)) +
+           sqrt(pow((x3_ - x1_), 2) + pow((y3_ - y1_), 2));
 }
 
-int Triangle::GetX1()
+int Triangle::getX1()
 {
-    return _x1;
+    return x1_;
 }
 
-int Triangle::GetY1()
+int Triangle::getY1()
 {
-    return _y1;
+    return y1_;
 }
 
-int Triangle::GetX2()
+int Triangle::getX2()
 {
-    return _x2;
+    return x2_;
 }
 
-int Triangle::GetY2()
+int Triangle::getY2()
 {
-    return _y2;
+    return y2_;
 }
 
-int Triangle::GetX3()
+int Triangle::getX3()
 {
-    return _x3;
+    return x3_;
 }
 
-int Triangle::GetY3()
+int Triangle::getY3()
 {
-    return _y3;
+    return y3_;
 }

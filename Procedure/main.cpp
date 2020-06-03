@@ -6,31 +6,28 @@ int main(int argc, char* argv[])
 {
     string outputPath;
     string inputPath;
-    if (argc != 3)
-    {
+    if (argc != 3) {
         cout << "The output or input files are not entered!\n";
         return true;
     }
     inputPath = argv[1];
     outputPath = argv[2];
-   try{
+   try {
         ifstream file(inputPath);
         file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         ofstream outfile(outputPath);
 
-        list* ptrHead = nullptr;
+        List* head = nullptr;
 
-        ptrHead = readFile(file, ptrHead);
-        //sortList(ptrHead);
-        writeToFile(outfile, ptrHead);
+        head = readFile(file, head);
+        //sortList(head);
+        writeToFile(outfile, head);
         //writeRectanglesToFile(outfile, ptrHead);
     }
-    catch (std::invalid_argument& ia)
-    {
+    catch (std::invalid_argument& ia) {
         std::cerr << ia.what();
     }
-    catch (std::ifstream::failure f)
-    {
+    catch (std::ifstream::failure f) {
         std::cerr << "Error reading input file";
     }
     return 0;

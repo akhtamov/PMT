@@ -5,87 +5,91 @@ using namespace std;
 class Shape
 {
 private:
-    enum _color { RED = 0, ORANGE, YELLOW, GREEN, BLUE, CYAN, PURPLE } clr;
-    float _density;
+    enum Ñolor { 
+        COLOR_RED, 
+        COLOR_ORANGE, 
+        COLOR_YELLOW, 
+        COLOR_GREEN, 
+        COLOR_BLUE, COLOR_CYAN, 
+        COLOR_PURPLE 
+    } color_;
+
+    float density_;
+
 public:
-    virtual void ReadShapeFromFile(ifstream& in);
-    virtual void WriteShapeToFile(ofstream& out);
-    virtual float CalculateThePerimeter();
-    bool Compare(Shape *other);
-    virtual void WriteRectangleToFile(ofstream& out);
+    virtual void readFromFile(ifstream& in);
+    virtual void writeToFile(ofstream& out);
+    virtual void writeRectangleToFile(ofstream& out);
+    virtual float computePerimeter();
+   
+    bool isPerimeterLess(Shape *other);
 
-    void SetColor(int value);
-    void SetDensity(float value);
+    int getColor();
+    float getDensity();
 
-    int GetColor();
-    float GetDensity();
-
-
+    void setColor(int value);
+    void setDensity(float value);
 };
 
 
 class Rectangle : public Shape
 {
 private:
-    int _xLeftUpCorner;
-    int _yLeftUpCorner;
-    int _xRightDownCorner;
-    int _yRightDownCorner;
+    int xLeftUpCorner_;
+    int yLeftUpCorner_;
+    int xRightDownCorner_;
+    int yRightDownCorner_;
 public:
-    void ReadShapeFromFile(ifstream& in) override;
-    void WriteShapeToFile(ofstream& out) override;
-    float CalculateThePerimeter() override;
-    void WriteRectangleToFile(ofstream& out) override;
-
-    void SetRectangle(int x1, int y1, int x2, int y2);
+    void readFromFile(ifstream& in) override;
+    void writeToFile(ofstream& out) override;
+    float computePerimeter() override;
+    void writeRectangleToFile(ofstream& out) override;
     
-    int GetXLeftUpCorner();
-    int GetYLeftUpCorner();
-    int GetXRightDownCorner();
-    int GetYRightDownCorner();
+    int getXLeftUpCorner();
+    int getYLeftUpCorner();
+    int getXRightDownCorner();
+    int getYRightDownCorner();
+
+    void setRectangle(int x1, int y1, int x2, int y2);
 };
 
 
 class Circle : public Shape
 {
 private:
-    int _xCenter;
-    int _yCenter;
-    float _radius;
+    int xCenter_;
+    int yCenter_;
+    float radius_;
 public:
-    void ReadShapeFromFile(ifstream& in) override;
-    void WriteShapeToFile(ofstream& out) override;
-    float CalculateThePerimeter() override;
-
-    void SetCircle(int x, int y, int radius);
+    void readFromFile(ifstream& in) override;
+    void writeToFile(ofstream& out) override;
+    float computePerimeter() override;
     
-    int GetXCenter();
-    int GetYCenter();
-    int GetRadius();
+    int getXCenter();
+    int getYCenter();
+    int getRadius();
+
+    void setCircle(int x, int y, int radius);
 };
 
 class Triangle : public Shape
 {
 private:
-    int _x1;
-    int _y1; 
-    int _x2;
-    int _y2;
-    int _x3;
-    int _y3;
+    int x1_, y1_;
+    int x2_, y2_;
+    int x3_, y3_;
+
 public:
-    void ReadShapeFromFile(ifstream& in) override;
-    void WriteShapeToFile(ofstream& out) override;
-    float CalculateThePerimeter() override;
+    void readFromFile(ifstream& in) override;
+    void writeToFile(ofstream& out) override;
+    float computePerimeter() override;
 
  
-    int GetX1(); int GetY1();
+    int getX1(); int getY1();
+    int getX2(); int getY2();
+    int getX3(); int getY3();
 
-    int GetX2(); int GetY2();
-
-    int GetX3(); int GetY3();
-
-    void SetTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+    void setTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
     
 };
 
