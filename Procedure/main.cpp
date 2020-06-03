@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "container.h"
+#include <fstream>
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -14,8 +15,15 @@ int main(int argc, char* argv[])
     }
     inputPath = argv[1];
     outputPath = argv[2];
+    ifstream in(inputPath);
+    ofstream out(outputPath);
 
-    readFile(inputPath);
-    writeToFile(outputPath);
+    readFile(in);
+    writeToFile(out);
+    multiMethod(out);
+
+    in.close();
+    out.close();
+
     return 0;
 }

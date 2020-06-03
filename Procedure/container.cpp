@@ -30,15 +30,14 @@ struct list* add_to_list()
     return ptrNew;
 }
 
-bool readFile(string input)
+bool readFile(ifstream& in)
 {
-    ifstream file(input);
-    if (!file.is_open())
+    if (!in.is_open())
     {
         return false;
     }
     string line;
-    getline(file, line);
+    getline(in, line);
     int figuresCount = atoi(line.c_str());
     for (int i = 0; i < figuresCount; i++)
     {
@@ -49,14 +48,14 @@ bool readFile(string input)
         }
         else ptrCur = add_to_list();
 
-        getline(file, line);
+        getline(in, line);
         switch (atoi(line.c_str()))
         {
         case shape::CIRCLE: ptrCur->shp.tp = shape::CIRCLE; break;
         case shape::RECTANGLE: ptrCur->shp.tp = shape::RECTANGLE; break;
         }
 
-        getline(file, line);
+        getline(in, line);
         switch (atoi(line.c_str()))
         {
         case shape::RED: ptrCur->shp.clr = shape::RED; break;
@@ -70,27 +69,27 @@ bool readFile(string input)
 
         if (ptrCur->shp.tp == shape::CIRCLE)
         {
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.cr.xCenter = atoi(line.c_str());
 
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.cr.yCenter = atoi(line.c_str());
 
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.cr.radius = atoi(line.c_str());
 
         }
         else if (ptrCur->shp.tp == shape::RECTANGLE) {
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.rct.xLeftUpCorner = atoi(line.c_str());
 
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.rct.yLeftUpCorner = atoi(line.c_str());
 
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.rct.xRightDownCorner = atoi(line.c_str());
 
-            getline(file, line);
+            getline(in, line);
             ptrCur->shp.rct.yRightDownCorner = atoi(line.c_str());
         }
         ptrCur = ptrCur->next;
@@ -98,9 +97,8 @@ bool readFile(string input)
     return true;
 }
 
-bool writeToFile(string output) {
-    ofstream outfile(output);
-    if (!outfile.is_open()) {
+bool writeToFile(ofstream& out) {
+    if (!out.is_open()) {
         return false;
     }
     int figuresCount = 0;
@@ -108,16 +106,16 @@ bool writeToFile(string output) {
     string color;
     do {
         if (ptrTemp->shp.tp == shape::CIRCLE) {
-            outfile << "Type of shape is CIRCLE" << endl;
-            outfile << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
+            out << "Type of shape is CIRCLE" << endl;
+            out << "Center's coordinates are (" << ptrTemp->shp.cr.xCenter << ", " << ptrTemp->shp.cr.yCenter << ")"
                 << endl;
-            outfile << "Radius is " << ptrTemp->shp.cr.radius << endl;
+            out << "Radius is " << ptrTemp->shp.cr.radius << endl;
         }
         else if (ptrTemp->shp.tp == shape::RECTANGLE) {
-            outfile << "Type of shape is RECTANGLE" << endl;
-            outfile << "Left angle's coordinates are (" << ptrTemp->shp.rct.xLeftUpCorner << ", "
+            out << "Type of shape is RECTANGLE" << endl;
+            out << "Left angle's coordinates are (" << ptrTemp->shp.rct.xLeftUpCorner << ", "
                 << ptrTemp->shp.rct.yLeftUpCorner << ')' << endl;
-            outfile << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
+            out << "Right angle's coordinates are (" << ptrTemp->shp.rct.xRightDownCorner << ", "
                 << ptrTemp->shp.rct.yRightDownCorner << ')' << endl;
         }
         switch (ptrTemp->shp.clr) {
@@ -130,10 +128,69 @@ bool writeToFile(string output) {
         case shape::PURPLE: color = "purple"; break;
         default: color = "unknown color";
         }
-        outfile << "Color is " << color << endl << endl;
+        out << "Color is " << color << endl << endl;
         ptrTemp = ptrTemp->next;
         figuresCount++;
     } while (ptrTemp != ptrHead);
-    outfile << "Number of shapes is " << figuresCount;
+    out << "Number of shapes is " << figuresCount;
     return true;
+}
+
+bool multiMethod(ofstream& out)
+{
+    out << endl <<  endl <<"Multimethod!" << endl;
+    if (ptrHead == nullptr) {
+        return 0;
+    }
+    list* ptrTemp = ptrHead;
+    int length = 0;
+
+    do {
+        ptrTemp = ptrTemp->next;
+        length++;
+    } while (ptrTemp != ptrHead);
+
+    list* ptrTemp_i = ptrHead;
+    list* ptrTemp_j = ptrHead;
+
+    for (int i = 0; i < length - 1; i++) {
+        ptrTemp_j = ptrTemp_i->next;
+        for (int j = i + 1; j < length; j++) {
+            switch (ptrTemp_i->shp.tp)
+            {
+            case shape::CIRCLE:
+                switch (ptrTemp_j->shp.tp) {
+                case shape::CIRCLE:
+                    out << "CIRCLE and CIRCLE" << endl;
+                    break;
+                case shape::RECTANGLE:
+                    out << "CIRCLE and RECTANGLE" << endl;
+                    break;
+                default:
+                    out << "CIRCLE and unknown type of shape" << endl;
+                    break;
+                }
+                break;
+
+            case shape::RECTANGLE:
+                switch (ptrTemp_j->shp.tp) {
+                case shape::CIRCLE:
+                    out << "RECTANGLE and CIRCLE" << endl;
+                    break;
+                case shape::RECTANGLE:
+                    out << "RECTANGLE and RECTANGLE" << endl;
+                    break;
+                default:
+                    out << "RECTANGLE and unknown type of shape" << endl;
+                    break;
+                }
+                break;
+            default:
+                out << "Unknown type of shape" << endl;
+                break;
+            }
+            ptrTemp_j = ptrTemp_j->next;
+        }
+        ptrTemp_i = ptrTemp_i->next;
+    }
 }

@@ -72,3 +72,29 @@ int List::Out(ofstream& out) {
     return 1;
 }
 
+bool List::MultiMethod(ofstream& out)
+{
+    out << endl << endl << "Multimethod!" << endl;
+    if (ptrHead == nullptr) {
+        return 0;
+    }
+    List* ptrTemp = ptrHead;
+    int length = 0;
+
+    do {
+        ptrTemp = ptrTemp->next;
+        length++;
+    } while (ptrTemp != ptrHead);
+
+    List* ptrTemp_i = ptrHead;
+    List* ptrTemp_j = ptrHead;
+
+    for (int i = 0; i < length - 1; i++) {
+        ptrTemp_j = ptrTemp_i->next;
+        for (int j = i + 1; j < length; j++) {
+            ptrTemp_i->shape->MultiMethod(ptrTemp_j->shape, out);
+            ptrTemp_j = ptrTemp_j->next;
+        }
+        ptrTemp_i = ptrTemp_i->next;
+    }
+}

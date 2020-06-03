@@ -9,6 +9,10 @@ private:
 public:
     virtual void ReadShapeFromFile(ifstream& in);
     virtual void WriteShapeToFile(ofstream& out);
+
+    virtual void MultiMethod(Shape* other, ofstream& out);
+    virtual void MMRectangle(ofstream& out);
+    virtual void MMCircle(ofstream& out);
 };
 
 
@@ -22,6 +26,10 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+
+    void MultiMethod(Shape* other, ofstream& out) override;
+    void MMRectangle(ofstream& out) override;
+    void MMCircle(ofstream& out) override;
 };
 
 
@@ -34,5 +42,9 @@ private:
 public:
     void ReadShapeFromFile(ifstream& in) override;
     void WriteShapeToFile(ofstream& out) override;
+
+    void MultiMethod(Shape* other, ofstream& out) override;
+    void MMRectangle(ofstream& out) override;
+    void MMCircle(ofstream& out) override;
 };
 

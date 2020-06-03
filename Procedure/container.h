@@ -11,5 +11,7 @@ struct list
 
 struct list* list_init();
 struct list* add_to_list();
-bool readFile(string input);
-bool writeToFile(string output);
+bool readFile(ifstream& in);
+bool writeToFile(ofstream& out);
+bool multiMethod(ofstream& out);
+

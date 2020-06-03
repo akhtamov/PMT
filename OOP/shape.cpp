@@ -36,6 +36,21 @@ void Shape::WriteShapeToFile(ofstream& out) {
 
 }
 
+void Shape::MultiMethod(Shape* other, ofstream& out)
+{
+    out << "Unknown type of shape" << endl;
+}
+
+void Shape::MMRectangle(ofstream& out)
+{
+    out << "RECTANGLE and unknown type of shape" << endl;
+}
+
+void Shape::MMCircle(ofstream& out)
+{
+    out << "CIRCLE and unknown type of shape" << endl;
+}
+
 
 void Circle::ReadShapeFromFile(ifstream& in) {
 
@@ -59,6 +74,21 @@ void Circle::WriteShapeToFile(ofstream& out) {
         << endl;
     out << "Radius is " << _radius << endl;
     Shape::WriteShapeToFile(out);
+}
+
+void Circle::MultiMethod(Shape* other, ofstream& out)
+{
+    other->MMCircle(out);
+}
+
+void Circle::MMRectangle(ofstream& out)
+{
+    out << "RECTANGLE and CIRCLE" << endl;
+}
+
+void Circle::MMCircle(ofstream& out)
+{
+    out << "CIRCLE and CIRCLE" << endl;
 }
 
 void Rectangle::ReadShapeFromFile(ifstream& in) {
@@ -87,5 +117,20 @@ void Rectangle::WriteShapeToFile(ofstream& out) {
     out << "Right angle's coordinates are (" << _xRightDownCorner << ", "
         << _yRightDownCorner << ')' << endl;
     Shape::WriteShapeToFile(out);
+}
+
+void Rectangle::MultiMethod(Shape* other, ofstream& out)
+{
+    other->MMRectangle(out);
+}
+
+void Rectangle::MMRectangle(ofstream& out)
+{
+    out << "RECTANGLE and RECTANGLE" << endl;
+}
+
+void Rectangle::MMCircle(ofstream& out)
+{
+    out << "CIRCLE and RECTANGLE" << endl;
 }
 

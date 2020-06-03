@@ -21,5 +21,7 @@ public:
 
     int In(ifstream& in);
     int Out(ofstream& out);
+
+    bool MultiMethod(ofstream& out);
 };
 
