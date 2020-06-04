@@ -313,3 +313,53 @@ void writeRectanglesToFile(ofstream& outfile, List* head)
     outfile << "Number of shapes is " << figuresCount;
 
 }
+
+
+void multimethod(ofstream& out, List* head)
+{
+    out << endl << endl << "Multimethod!" << endl;
+    if (head == nullptr) {
+        throw std::invalid_argument("Error: list is empty!");
+    }
+    
+    int length = getLength(head);
+
+    List* first = head;
+    List* second = head;
+
+    for (int i = 0; i < length - 1; i++) {
+        second = first->next;
+        for (int j = i + 1; j < length; j++) {
+            switch (first->shape.type)
+            {
+            case Shape::TYPE_CIRCLE:
+                switch (second->shape.type) {
+                case Shape::TYPE_CIRCLE    : out << "CIRCLE and CIRCLE"                 << endl; break;
+                case Shape::TYPE_RECTANGLE : out << "CIRCLE and RECTANGLE"              << endl; break;
+                case Shape::TYPE_TRIANGLE:   out << "CIRCLE and TRIANGLE"               << endl; break;
+                default                    : out << "CIRCLE and unknown type of shape"  << endl; break;
+                } break;
+
+            case Shape::TYPE_RECTANGLE:
+                switch (second->shape.type) {
+                case Shape::TYPE_CIRCLE    : out << "RECTANGLE and CIRCLE"                << endl; break;
+                case Shape::TYPE_RECTANGLE : out << "RECTANGLE and RECTANGLE"             << endl; break;
+                case Shape::TYPE_TRIANGLE: out <<   "RECTANGLE and TRIANGLE"              << endl; break;
+                default                    : out << "RECTANGLE and unknown type of shape" << endl; break;
+                } break;
+
+            case Shape::TYPE_TRIANGLE:
+                switch (second->shape.type) {
+                case Shape::TYPE_CIRCLE    : out << "TRIANGLE and CIRCLE"                << endl; break;
+                case Shape::TYPE_RECTANGLE : out << "TRIANGLE and RECTANGLE"             << endl; break;
+                case Shape::TYPE_TRIANGLE:   out << "TRIANGLE and TRIANGLE"              << endl; break;
+                default                    : out << "TRIANGLE and unknown type of shape" << endl; break;
+                } break;
+
+            default : out << "Unknown type of shape" << endl; break;
+            }
+            second = second->next;
+        }
+        first = first->next;
+    }
+}

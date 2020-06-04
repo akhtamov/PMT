@@ -54,6 +54,26 @@ float Shape::computePerimeter()
     return 0;
 }
 
+void Shape::multimethod(Shape* other, ofstream& out)
+{
+    out << "Unknown type of shape" << endl;
+}
+
+void Shape::mmRectangle(ofstream& out)
+{
+    out << "RECTANGLE and unknown type of shape" << endl;
+}
+
+void Shape::mmCircle(ofstream& out)
+{
+    out << "CIRCLE and unknown type of shape" << endl;
+}
+
+void Shape::mmTriangle(ofstream& out)
+{
+    out << "TRIANGLE and unknown type of shape" << endl;
+}
+
 void Circle::readFromFile(ifstream& in) 
 {
 
@@ -91,6 +111,26 @@ void Circle::writeToFile(ofstream& out)
 float Circle::computePerimeter()
 {
     return (float)2 * 3.14 * radius_;
+}
+
+void Circle::multimethod(Shape* other, ofstream& out)
+{
+    other->mmCircle(out);
+}
+
+void Circle::mmRectangle(ofstream& out)
+{
+    out << "RECTANGLE and CIRCLE" << endl;
+}
+
+void Circle::mmCircle(ofstream& out)
+{
+    out << "CIRCLE and CIRCLE" << endl;
+}
+
+void Circle::mmTriangle(ofstream& out)
+{
+    out << "TRIANGLE and CIRCLE" << endl;
 }
 
 void Circle::setCircle(int x, int y, int radius)
@@ -185,6 +225,27 @@ void Rectangle::writeRectangleToFile(ofstream& out)
 
     writeToFile(out);
 }
+
+void Rectangle::multimethod(Shape* other, ofstream& out)
+{
+    other->mmRectangle(out);
+}
+
+void Rectangle::mmRectangle(ofstream& out)
+{
+    out << "RECTANGLE and RECTANGLE" << endl;
+}
+
+void Rectangle::mmCircle(ofstream& out)
+{
+    out << "CIRCLE and RECTANGLE" << endl;
+}
+
+void Rectangle::mmTriangle(ofstream& out)
+{
+    out << "TRIANGLE and RECTANGLE" << endl;
+}
+
 
 void Rectangle::setRectangle(int x1, int y1, int x2, int y2)
 {
@@ -310,6 +371,27 @@ float Triangle::computePerimeter()
            sqrt(pow((x2_ - x3_), 2) + pow((y2_ - y3_), 2)) +
            sqrt(pow((x3_ - x1_), 2) + pow((y3_ - y1_), 2));
 }
+
+void Triangle::multimethod(Shape* other, ofstream& out)
+{
+    other->mmTriangle(out);
+}
+
+void Triangle::mmRectangle(ofstream& out)
+{
+    out << "RECTANGLE and TRIANGLE" << endl;
+}
+
+void Triangle::mmCircle(ofstream& out)
+{
+    out << "CIRCLE and TRIANGLE" << endl;
+}
+
+void Triangle::mmTriangle(ofstream& out)
+{
+    out << "TRIANGLE and TRIANGLE" << endl;
+}
+
 
 int Triangle::getX1()
 {

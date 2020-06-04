@@ -19,7 +19,7 @@ List* List::addElement(List* current, List* head) {
     return added;
 }
 
-List* List::initialization(List* current, List* head) {
+List* List::initialization() {
     head = new List();
     current = new List();
     head->next = head;
@@ -28,7 +28,7 @@ List* List::initialization(List* current, List* head) {
     return current;
 }
 
-List* List::readFromFile(ifstream& in, List* current, List* head) {
+List* List::readFromFile(ifstream& in, List* head) {
     if (!in.is_open()) {
         throw std::invalid_argument("Error reading file!");
     }
@@ -39,7 +39,7 @@ List* List::readFromFile(ifstream& in, List* current, List* head) {
     int shapesCount = atoi(line.c_str());
     for (int i = 0; i < shapesCount; i++) {
         if (i == 0) { 
-            head = initialization(current, head);
+            head = initialization();
             current = head;
         }
         else 
@@ -69,7 +69,7 @@ List* List::readFromFile(ifstream& in, List* current, List* head) {
     return head;
 }
 
-int List::writeToFile(ofstream& out, List *head) {
+void List::writeToFile(ofstream& out, List *head) {
 
     if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
@@ -89,7 +89,6 @@ int List::writeToFile(ofstream& out, List *head) {
     } while (temp != head);
 
     out << "Number of shapes is " << shapesCount;
-    return 1;
 }
 
 void List::sortByPerimeter(List* head) {
@@ -134,7 +133,7 @@ int List::getLength(List* head) {
     }
 }
 
-int List::writeRectanglesToFile(ofstream& out, List * head)
+void List::writeRectanglesToFile(ofstream& out, List * head)
 {
     if (!out.is_open()) {
         throw std::invalid_argument("Error writing file!");
@@ -153,6 +152,26 @@ int List::writeRectanglesToFile(ofstream& out, List * head)
     } while (temp != head);
 
     out << "Number of shapes is " << rectanglesCount;
-    return 1;
+}
 
+
+void List::multimethod(ofstream& out, List* head)
+{
+    out << endl << endl << "Multimethod!" << endl;
+    if (head == nullptr) {
+        throw std::invalid_argument("List is empty!");
+    }
+    int length = getLength(head);
+
+    List* first = head;
+    List* second = head;
+
+    for (int i = 0; i < length - 1; i++) {
+        second = first->next;
+        for (int j = i + 1; j < length; j++) {
+            first->shape->multimethod(second->shape, out);
+            second = second->next;
+        }
+        first = first->next;
+    }
 }

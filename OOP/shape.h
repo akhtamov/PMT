@@ -21,7 +21,12 @@ public:
     virtual void writeToFile(ofstream& out);
     virtual void writeRectangleToFile(ofstream& out);
     virtual float computePerimeter();
-   
+
+    virtual void multimethod(Shape* other, ofstream& out);
+    virtual void mmRectangle(ofstream& out);
+    virtual void mmCircle(ofstream& out);
+    virtual void mmTriangle(ofstream& out);
+
     bool isPerimeterLess(Shape *other);
 
     int getColor();
@@ -44,6 +49,11 @@ public:
     void writeToFile(ofstream& out) override;
     float computePerimeter() override;
     void writeRectangleToFile(ofstream& out) override;
+
+    void multimethod(Shape* other, ofstream& out) override;
+    void mmRectangle(ofstream& out) override;
+    void mmCircle(ofstream& out) override;
+    void mmTriangle(ofstream& out) override;
     
     int getXLeftUpCorner();
     int getYLeftUpCorner();
@@ -51,6 +61,7 @@ public:
     int getYRightDownCorner();
 
     void setRectangle(int x1, int y1, int x2, int y2);
+
 };
 
 
@@ -64,6 +75,11 @@ public:
     void readFromFile(ifstream& in) override;
     void writeToFile(ofstream& out) override;
     float computePerimeter() override;
+
+    void multimethod(Shape* other, ofstream& out) override;
+    void mmRectangle(ofstream& out) override;
+    void mmCircle(ofstream& out) override;
+    void mmTriangle(ofstream& out) override;
     
     int getXCenter();
     int getYCenter();
@@ -84,7 +100,11 @@ public:
     void writeToFile(ofstream& out) override;
     float computePerimeter() override;
 
- 
+    void multimethod(Shape* other, ofstream& out) override;
+    void mmRectangle(ofstream& out) override;
+    void mmCircle(ofstream& out) override;
+    void mmTriangle(ofstream& out) override;
+
     int getX1(); int getY1();
     int getX2(); int getY2();
     int getX3(); int getY3();

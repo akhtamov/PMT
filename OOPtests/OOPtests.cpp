@@ -259,7 +259,7 @@ namespace OOPtests
 		{
 			List* ptrHead = nullptr;
 			List* ptrCur = nullptr;
-			ptrCur = List::initialization(ptrCur, ptrHead);
+			ptrCur = List::initialization();
 			ptrHead = ptrCur;
 			ptrCur->shape = new Shape();
 			ptrCur->shape->setColor(1);
@@ -300,7 +300,7 @@ namespace OOPtests
 			List* ptrHead = nullptr;
 			List* ptrCur = nullptr;
 	
-			ptrCur = List::initialization(ptrCur, ptrHead);
+			ptrCur = List::initialization();
 			ptrHead = ptrCur;
 
 			ptrCur = ptrCur->next;
@@ -328,7 +328,7 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List * ptrHead = new List();
 
-			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrHead);
 			infile.close();
 			
 			ptrCur = ptrHead;
@@ -351,7 +351,7 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List* ptrHead = new List();
 
-			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrHead);
 			infile.close();
 
 			list->writeToFile(outfile, ptrHead);
@@ -396,7 +396,7 @@ namespace OOPtests
 			List* ptrCur = new List();
 			List* ptrHead = new List();
 
-			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrHead);
 			infile.close();
 
 			list->writeRectanglesToFile(outfile, ptrHead);
@@ -429,7 +429,7 @@ namespace OOPtests
 			List* list = new List();
 			List* ptrCur = nullptr;
 			List* ptrHead = nullptr;
-			ptrHead = list->readFromFile(infile, ptrCur, ptrHead);
+			ptrHead = list->readFromFile(infile, ptrHead);
 			infile.close();
 
 			list->sortByPerimeter(ptrHead);

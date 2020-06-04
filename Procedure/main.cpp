@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
         //sortByPerimeter(head);
         writeToFile(outfile, head);
         //writeRectanglesToFile(outfile, head);
+        multimethod(outfile, head);
+
     } catch (std::invalid_argument& ia) {
         std::cerr << ia.what();
     } catch (std::ifstream::failure f) {

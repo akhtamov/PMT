@@ -18,4 +18,41 @@ Density is 7
 Perimeter is 11.3137
 Color is green
 
-Number of shapes is 3
+Type of shape is RECTANGLE
+Left angle's coordinates are (2, 5)
+Right angle's coordinates are (7, 3)
+Density is 7
+Perimeter is 14
+Color is cyan
+
+Type of shape is CIRCLE
+Center's coordinates are (1, 1)
+Radius is 4
+Density is 5
+Perimeter is 25.12
+Color is yellow
+
+Type of shape is TRIANGLE
+Its coordinates are (1, 2), (3, 4), (5, 6)
+Density is 10
+Perimeter is 11.3137
+Color is cyan
+
+Number of shapes is 6
+
+Multimethod!
+RECTANGLE and CIRCLE
+RECTANGLE and TRIANGLE
+RECTANGLE and RECTANGLE
+RECTANGLE and CIRCLE
+RECTANGLE and TRIANGLE
+CIRCLE and TRIANGLE
+CIRCLE and RECTANGLE
+CIRCLE and CIRCLE
+CIRCLE and TRIANGLE
+TRIANGLE and RECTANGLE
+TRIANGLE and CIRCLE
+TRIANGLE and TRIANGLE
+RECTANGLE and CIRCLE
+RECTANGLE and TRIANGLE
+CIRCLE and TRIANGLE

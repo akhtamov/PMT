@@ -21,5 +21,5 @@ int getLength(List* head);
 bool isPerimeterLess(List* first, List* second);
 void sortByPerimeter(List* head);
 void out(List*, ofstream& outfile);
-
+void multimethod(ofstream& out, List* head);
 

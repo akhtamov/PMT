@@ -19,14 +19,16 @@ public:
     List* prev;
     List* next;
 
-    static List* initialization(List* current, List* head);
+    static List* initialization();
     static List* addElement(List* current, List* head);
     
     static int getLength(List* head);
     void sortByPerimeter(List* head);
     
-    List* readFromFile(ifstream& in, List* current, List* head);
-    int writeToFile(ofstream& out, List* head);
-    int writeRectanglesToFile(ofstream& out, List* head);
+    List* readFromFile(ifstream& in, List* head);
+    void writeToFile(ofstream& out, List* head);
+    void writeRectanglesToFile(ofstream& out, List* head);
+
+    void multimethod(ofstream& out, List* head);
 };
 

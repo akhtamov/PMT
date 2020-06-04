@@ -4,15 +4,14 @@
 //
 int main(int argc, char* argv[]) {
 
-    string inputPath;
-    string outputPath;
-
     if (argc != 3) {
         cout << "Type input and output files\n";
         return 1;
     }
-    inputPath = argv[1];
-    outputPath = argv[2];
+
+    string inputPath = argv[1];
+    string outputPath = argv[2];
+
     try {
         ifstream infile(inputPath);
         infile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -20,16 +19,17 @@ int main(int argc, char* argv[]) {
         ofstream outfile(outputPath);
         
         List* list = new List();
-        List* current = nullptr;
         List* head = nullptr;
 
-        head = list->readFromFile(infile, current, head);
+        head = list->readFromFile(infile, head);
 
-        //list->sortByPerimeter(ptrHead);
+        //list->sortByPerimeter(head);
 
         list->writeToFile(outfile, head);
 
         //list->writeRectangleToFile(outfile, head);
+
+        list->multimethod(outfile, head);
 
     } catch (std::invalid_argument& ia) {
         std::cerr << ia.what();
