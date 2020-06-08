@@ -31,4 +31,3 @@ public:
 
     void multimethod(ofstream& out, List* head);
 };
-
